@@ -1,6 +1,14 @@
+oc_deuxieme_test:
+    resource: "@OCDeuxiemeTestBundle/Resources/config/routing.yml"
+    prefix:   /deuxieme
+
+oc_test:
+    resource: "@OCTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oc_platform:
     resource: "@OCPlatformBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /platform #ajouter /platform a la fin de l'url. Si plusieurs préfixes identiques dans ce fichier, le premier rencontré sera celui retenu.
 
 app:
     resource: '@AppBundle/Controller/'
