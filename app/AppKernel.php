@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new OC\PlatformBundle\OCPlatformBundle(),
             new OC\TestBundle\OCTestBundle(),
             new OC\DeuxiemeTestBundle\OCDeuxiemeTestBundle(),
+            new OC\finP2Ch1Bundle\OCfinP2Ch1Bundle(),
+            new OC\RerevisionsBundle\OCRerevisionsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

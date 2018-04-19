@@ -1,3 +1,11 @@
+oc_rerevisions:
+    resource: "@OCRerevisionsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+o_cfin_p2_ch1:
+    resource: "@OCfinP2Ch1Bundle/Resources/config/routing.yml"
+    prefix:   /P2CH1
+
 oc_deuxieme_test:
     resource: "@OCDeuxiemeTestBundle/Resources/config/routing.yml"
     prefix:   /deuxieme

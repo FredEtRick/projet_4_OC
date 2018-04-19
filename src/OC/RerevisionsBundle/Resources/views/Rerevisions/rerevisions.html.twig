@@ -1,0 +1,26 @@
+<html>
+    <head>  
+        <title>rerevisions</title>
+    </head>
+    <body>
+        <p>page de rerevision.</p>
+        <p>année : {{annee}}</p>
+        <p>fichier : {{fichier}}.{{extension|upper}}</p>
+        <p>lien vers la page test <a href="{{url}}">via controller version longue</a>, <a href="{{url2}}">via controller version courte</a>, <a href="{{path('oC_fin_p2_ch1_parametres_multiples', {'annee' : 1991, 'nomFichier' : 'photo', '_format' : 'jpg'})}}">ou parametres multiples via template directement avec variables</a>.</p>
+        
+        <!-- session flash -->
+        {% for personne in app.session.flashBag.get('personnes') %}
+            <p>personne : {{personne}}</p>
+        {% endfor %}
+        {# Commentaire
+        sur plusieurs lignes #}
+        <p>{{"date : " ~ "now"|date('d/m/Y') ~ "."}}</p>
+        <p>{{"get sans tags : " ~ getProtegee|striptags ~ ", get avec tags écrits : " ~ getNonProtegee ~ "get raw : " ~ getRaw|raw}}</p>
+        <p>{{"app.request : " ~ app.request}}</p>
+        {#<p>{{"app.session : " ~ app.session}}</p>#}
+        <p>{{"app.environment : " ~ app.environment}}</p>
+        <p>{{"app.debug : " ~ app.debug}}</p>
+        <p>{{"app.user : " ~ app.user}}</p>
+        <p>{{variableGlobalePerso}}</p>
+    </body>
+</html>

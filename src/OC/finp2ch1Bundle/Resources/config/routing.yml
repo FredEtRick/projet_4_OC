@@ -1,0 +1,51 @@
+o_cfin_p2_ch1_homepage:
+    path:     /
+    defaults: { _controller: OCfinP2Ch1Bundle:Default:index }
+
+oc_fin_p2_ch1_test :
+    path :    /test
+    defaults: { _controller: OCfinP2Ch1Bundle:Test:test }
+    
+oc_fin_p2_ch1_view :
+    path :    /view/{id}
+    defaults: { _controller: OCfinP2Ch1Bundle:Test:view }
+    
+oc_fin_p2_ch1_add :
+    path :    /add
+    defaults: { _controller: OCfinP2Ch1Bundle:Test:add }
+    
+oC_fin_p2_ch1_parametres_multiples :
+    path :    /parametres_multiples/{annee}/{nomFichier}.{_format}
+    defaults :
+        _controller : OCfinP2Ch1Bundle:Test:parametresMultiples
+        format : jpg
+    requirements :
+        annee : \d{4}
+        format : jpg|jpeg|gif|png|xml|html
+        
+oc_fin_p2_ch1_revision :
+    path :   /revisions/{titre}.{age} #._format
+    defaults :
+        _controller : OCfinP2Ch1Bundle:Revisions:main
+        titre : Mr
+        age : 18
+        #_format : html
+    requirements :
+        age : \d{1,3}
+        titre : Mr|Mme|Mlle
+        #_format : html|xml
+
+oc_fin_p2_ch1_decompose :
+    path :     /decompose
+    defaults : 
+        _controller : OCfinP2Ch1Bundle:Response:decompose
+
+oc_fin_p2_ch1_reponse_rapide :
+    path :     /reponseRapide
+    defaults :
+        _controller : OCfinP2Ch1Bundle:Response:reponseRapide
+
+oc_fin_p2_ch1_session :
+    path :     /session
+    defaults :
+        _controller : OCfinP2Ch1Bundle:Session:session

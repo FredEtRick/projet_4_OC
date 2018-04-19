@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>rerévisions</title>
+    </head>
+    <body>
+        <p>encore une révision !</p>
+        <p>via url : {{url}}</p>
+        <p>via formulaire : {{formulaire}}</p>
+        <p>request uri : {{uri}}</p>
+        <p>server http user agent : {{serverHttp}}</p>
+        <p>ajax ? : {{ajax}}</p>
+        <p>{{variableGlobalePerso}}</p>
+        {% set varCreeIci = 'variable créée ici !' %}
+        <p>{{varCreeIci}}</p>
+        {% for cle, valeur in moi %}
+            <p>
+                loop.index : {{loop.index}}<br />
+                loop.revindex : {{loop.revindex}}<br />
+                {% if loop.first %}
+                    premier tour sur {{loop.length}}<br />
+                {% endif %}
+                {% if loop.last %}
+                    dernier tour !<br />
+                {% endif %}
+                loop.index0 : {{loop.index0}}<br />
+                loop.revindex0 : {{loop.revindex0}}<br />
+                <strong>{{cle}} : {{valeur}}</strong>
+            </p>
+        {% endfor %}
+        {% if bit is defined %}
+            <p>bit = {{bit}}</p>
+        {% endif %}
+    </body>
+</html>

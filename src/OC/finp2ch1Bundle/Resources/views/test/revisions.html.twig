@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>revisions</title>
+    </head>
+    <body>
+        <p>Je suis {{titre}}. {{prénom}} {{nom|upper}}, et j'ai {{age}} ans.</p>
+        <!--<p>Cette page est présentée au format { {format} }.</p>-->
+        <p>Allez voir la page <a href="{{url}}">view</a>.</p>
+        <p>Ou alors, la page de <a href="{{path('oC_fin_p2_ch1_parametres_multiples', {'annee' : 1999, 'nomFichier' : 'image', '_format' : 'html'})}}">parametres</a> !</p>
+        <p>Le paramètre passé en GET par l'URL : {{contenuGet}}</p>
+        <p>Le paramètre passé en POST par le formulaire : {{contenuPost}}</p>
+        <p>$_SERVER['REQUEST_URI'] a transmit a $server : {{requestUri}}</p>
+        <p>$_SERVER['HTTP_(USER_AGENT ?)'] a transmit a $headers : {{userAgent}}</p>
+        <p>page transmise en ajax : {{ajax}}</p>
+    </body>
+</html>
