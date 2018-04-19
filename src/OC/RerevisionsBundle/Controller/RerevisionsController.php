@@ -55,5 +55,13 @@
             mail('fred.malard@wanadoo.fr', 'mailViaSymfony', $contenu);
             return new Response('tentative d\'envoie de mail a ma propre adresse.');
         }
+        public function heritageAction()
+        {
+            return $this->render('OCRerevisionsBundle:Rerevisions:fils.html.twig');
+        }
+        public function pourInclusionAction()
+        {
+            return $this->render('OCRerevisionsBundle:Rerevisions:aInclureViaController.html.twig', array('nomMethode' => 'pourInclusionAction'));
+        }
     }
 ?>

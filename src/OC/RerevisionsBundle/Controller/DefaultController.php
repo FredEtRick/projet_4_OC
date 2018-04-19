@@ -23,7 +23,9 @@ class DefaultController extends Controller
         if ($request->isXmlHttpRequest())
             $ajax = 'oui';
         $moi = array('prenom' => 'frédéric', 'nom' => 'malard', 'age' => 27);
-        $parametres = array('url' => $paramGet, 'formulaire' => $paramPost, 'uri' => $paramServer, 'serverHttp' => $paramServerHttp, 'ajax' => $ajax, 'moi' => $moi);
+        $nombre = $request->query->get('nombre');
+        
+        $parametres = array('url' => $paramGet, 'formulaire' => $paramPost, 'uri' => $paramServer, 'serverHttp' => $paramServerHttp, 'ajax' => $ajax, 'moi' => $moi, 'nombre' => $nombre);
         if ($request->query->get('bit') != null)
             $parametres['bit'] = $bit;
         

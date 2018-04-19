@@ -42,3 +42,8 @@ oc_rerevisions_mail :
     path :    /mail
     defaults :
         _controller : OCRerevisionsBundle:Rerevisions:mail
+
+oc_rerevisions_heritage :
+    path :    /heritage
+    defaults :
+        _controller : OCRerevisionsBundle:Rerevisions:heritage

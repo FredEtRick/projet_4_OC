@@ -30,5 +30,11 @@
         {% if bit is defined %}
             <p>bit = {{bit}}</p>
         {% endif %}
+        {% if nombre is even and nombre > 0 %}
+            <p>{{nombre}} est pair !</p>
+        {% endif %}
+        {% if nombre is odd %}
+            <p>{{nombre}} est impair !</p>
+        {% endif %}
     </body>
 </html>
