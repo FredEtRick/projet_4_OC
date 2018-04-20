@@ -1,0 +1,7 @@
+{
+    "require" :
+    {
+        "twig/extensions" : "~1.0",
+        "doctrine/doctrine-fixtures-bundle" : "3.*"
+    }
+}
