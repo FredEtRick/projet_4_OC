@@ -1,4 +1,10 @@
+#parameters:
+#   nomParam: valeurParam
+
 services:
 #    oc_rerevisions.example:
 #        class: OC\RerevisionsBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+#    oc_rerevisions.test:
+#        class: OC\RerevisionsBundle\test\OCtest   #c'est le namespace de la classe apparemment, c'est pas la classe elle même !!!

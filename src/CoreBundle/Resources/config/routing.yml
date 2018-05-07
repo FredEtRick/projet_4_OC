@@ -1,0 +1,13 @@
+core_homepage:
+    path:     /
+    defaults: { _controller: CoreBundle:Default:index }
+
+core_machin :
+    path :    /machin
+    defaults :
+        _controller :   CoreBundle:Machin:machin
+
+core_bdd :
+    path :    /bdd
+    defaults :
+        _controller :   CoreBundle:Bdd:bdd

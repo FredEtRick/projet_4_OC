@@ -21,12 +21,14 @@ class AppKernel extends Kernel
             new OC\DeuxiemeTestBundle\OCDeuxiemeTestBundle(),
             new OC\finP2Ch1Bundle\OCfinP2Ch1Bundle(),
             new OC\RerevisionsBundle\OCRerevisionsBundle(),
+            new CoreBundle\CoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            //$bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
 
             if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

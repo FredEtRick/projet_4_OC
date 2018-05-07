@@ -1,3 +1,7 @@
+core:
+    resource: "@CoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oc_rerevisions:
     resource: "@OCRerevisionsBundle/Resources/config/routing.yml"
     prefix:   /
