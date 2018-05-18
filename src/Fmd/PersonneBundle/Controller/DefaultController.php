@@ -14,15 +14,15 @@ class DefaultController extends Controller
         $personne->setPrenom('Frederic');
         $personne->setNom('Malard');
         $personne->setPays('France');
-        //$personne->setDateNaissance(new \Date('03-06-1991')); PROBLEME DATE !!! Dit que manque un use mais je trouve pas chemin
+        $personne->setDateNaissance(new \Datetime('06-03-1991'));
         $personne->setReduction(false);
         
-        /*$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($personne);
         $em->flush();
         
-        $dateNaissance = $personne->getDateNaissance();*/
+        $dateNaissance = $personne->getDateNaissance();
         
-        return $this->render('FmdPersonneBundle:Default:index.html.twig'/*, array('dateNaissance' => $dateNaissance)*/);
+        return $this->render('FmdPersonneBundle:Default:index.html.twig', array('dateNaissance' => date_format($dateNaissance, 'd/m/Y')));
     }
 }
