@@ -187,11 +187,29 @@ class Personne
         return $this->reduction;
     }
     
-    /*public function getTarif()
+    public function getTarif()
     {
-        si moins de 12 ans : 8€
+        /*si moins de 12 ans : 8€
         sinon, si reduction : 10€
-        sinon, calculer tarif en fonction de l age
-    }*/
+        sinon, calculer tarif en fonction de l age*/
+        
+        $aujourdhui = new \Datetime();
+        $dateNaissance = $this->getDateNaissance();
+        $age = date_format($aujourdhui, 'Y') - date_format($dateNaissance, 'Y');
+        if (date_format($aujourdhui, 'm') < date_format($dateNaissance, 'm'))
+            $age--;
+        elseif(date_format($aujourdhui, 'm') == date_format($dateNaissance, 'm') && date_format($aujourdhui, 'd') < date_format($dateNaissance, 'd'))
+            $age--;
+        
+        if ($age < 4)
+            return 0;
+        if ($age < 12)
+            return 8;
+        if ($this->getReduction())
+            return 10;
+        if ($age >= 60)
+            return 12;
+        return 16;
+    }
 }
 
