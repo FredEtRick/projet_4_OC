@@ -1,0 +1,3 @@
+fmd_personne_homepage:
+    path:     /
+    defaults: { _controller: FmdPersonneBundle:Default:index }

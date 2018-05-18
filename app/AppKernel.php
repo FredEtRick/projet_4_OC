@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new OC\finP2Ch1Bundle\OCfinP2Ch1Bundle(),
             new OC\RerevisionsBundle\OCRerevisionsBundle(),
             new CoreBundle\CoreBundle(),
+            new Fmd\PersonneBundle\FmdPersonneBundle(),
+            new Fmd\BookingManagementBundle\FmdBookingManagementBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
