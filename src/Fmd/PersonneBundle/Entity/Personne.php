@@ -189,9 +189,7 @@ class Personne
     
     public function getTarif()
     {
-        /*si moins de 12 ans : 8€
-        sinon, si reduction : 10€
-        sinon, calculer tarif en fonction de l age*/
+        // note : énnoncé ne précise pas impact choix "demi journée" sur le tarif... Divise par deux ? Note : Si choix demi journée a un impact sur le prix, je devrais surement migrer la méthode vers l'entité billet, pour avoir accès au type de billet (puis parce que c'est plus approprié) ou plutot dans réservation : il y aura le détail des prix + le prix total pour paiement
         
         $aujourdhui = new \Datetime();
         $dateNaissance = $this->getDateNaissance();
