@@ -1,9 +1,9 @@
-fmd_booking_management:
-    resource: "@FmdBookingManagementBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fmd_personne:
     resource: "@FmdPersonneBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+fmd_booking_management:
+    resource: "@FmdBookingManagementBundle/Resources/config/routing.yml"
     prefix:   /
 
 core:

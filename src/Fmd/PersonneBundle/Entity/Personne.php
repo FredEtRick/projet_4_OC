@@ -186,5 +186,12 @@ class Personne
     {
         return $this->reduction;
     }
+    
+    /*public function getTarif()
+    {
+        si moins de 12 ans : 8€
+        sinon, si reduction : 10€
+        sinon, calculer tarif en fonction de l age
+    }*/
 }
 
