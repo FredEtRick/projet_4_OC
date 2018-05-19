@@ -40,6 +40,16 @@ class Reservation
      */
     private $numReservation;
     
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="dateReservation", type="date")
+     */
+    private $dateReservation;
+    
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
@@ -52,6 +62,8 @@ class Reservation
             $doublon = $repository->findOneBy(array('numReservation' => $codeAleatoire));
         } while ($doublon != null);
         $this->numReservation = $codeAleatoire;
+        
+        $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -114,13 +126,6 @@ class Reservation
     {
         return $this->billets;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add billet
@@ -169,5 +174,29 @@ class Reservation
     public function getNumReservation()
     {
         return $this->numReservation;
+    }
+
+    /**
+     * Set dateReservation
+     *
+     * @param \DateTime $dateReservation
+     *
+     * @return Reservation
+     */
+    public function setDateReservation($dateReservation)
+    {
+        $this->dateReservation = $dateReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateReservation
+     *
+     * @return \DateTime
+     */
+    public function getDateReservation()
+    {
+        return $this->dateReservation;
     }
 }
