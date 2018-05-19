@@ -122,4 +122,12 @@ class Billet
     {
         return $this->reservation;
     }
+    
+    public function getTarif()
+    {
+        $tarifJournee = $this->personne->getTarifJournee();
+        if (! $this->journeeEntiere)
+            $tarifJournee /= 2;
+        return $tarifJournee;
+    }
 }

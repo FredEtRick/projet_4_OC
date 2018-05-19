@@ -29,10 +29,16 @@ class Reservation
     private $mail;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fmd\BookingManagementBundle\Entity\Billet", mappedBy="numeroReservation")
+     * @ORM\OneToMany(targetEntity="Fmd\BookingManagementBundle\Entity\Billet", mappedBy="reservation")
      */
     private $billets;
-
+    
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="numReservation", type="string", length=255)
+     */
+    private $numReservation;
 
     /**
      * Get id
