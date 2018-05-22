@@ -22,7 +22,7 @@ class DefaultController extends Controller
         $em->flush();
         
         $dateNaissance = $personne->getDateNaissance();
-        $tarif = $personne->getTarif();
+        $tarif = $personne->getTarifJournee();
         
         return $this->render('FmdPersonneBundle:Default:index.html.twig', array('dateNaissance' => date_format($dateNaissance, 'd/m/Y'), 'tarif' => $tarif));
     }
