@@ -1,3 +1,0 @@
-oc_test_homepage:
-    path:     /     #l'url a indiquer pour y accéder est l'url servant a accéder a ce router (indiquée dans app/config/routing.yml), a laquelle on ajoute la valeur de "path" ci à gauche.
-    defaults: { _controller: OCTestBundle:Default:index }

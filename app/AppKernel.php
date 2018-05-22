@@ -15,13 +15,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AppBundle\AppBundle(),
-            new OC\PlatformBundle\OCPlatformBundle(),
-            new OC\TestBundle\OCTestBundle(),
-            new OC\DeuxiemeTestBundle\OCDeuxiemeTestBundle(),
-            new OC\finP2Ch1Bundle\OCfinP2Ch1Bundle(),
-            new OC\RerevisionsBundle\OCRerevisionsBundle(),
-            new CoreBundle\CoreBundle(),
             new Fmd\PersonneBundle\FmdPersonneBundle(),
             new Fmd\BookingManagementBundle\FmdBookingManagementBundle(),
         ];
