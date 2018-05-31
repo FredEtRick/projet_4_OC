@@ -1,3 +1,0 @@
-fmd_booking_management_homepage:
-    path:     /
-    defaults: { _controller: FmdBookingManagementBundle:Default:index }
