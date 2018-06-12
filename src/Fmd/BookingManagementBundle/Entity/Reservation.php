@@ -1,0 +1,202 @@
+<?php
+
+namespace Fmd\BookingManagementBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Reservation
+ *
+ * @ORM\Table(name="reservation")
+ * @ORM\Entity(repositoryClass="Fmd\BookingManagementBundle\Repository\ReservationRepository")
+ */
+class Reservation
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=255)
+     */
+    private $mail;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Fmd\BookingManagementBundle\Entity\Billet", mappedBy="reservation")
+     */
+    private $billets;
+    
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="numReservation", type="string", length=255)
+     */
+    private $numReservation;
+    
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="dateReservation", type="date")
+     */
+    private $dateReservation;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
+        $doublon = null;
+        $codeAleatoire = '';
+        $repository = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
+        do
+        {
+            $codeAleatoire = substr(str_shuffle($caracteres), 0, 30);
+            $doublon = $repository->findOneBy(array('numReservation' => $codeAleatoire));
+        } while ($doublon != null);
+        $this->numReservation = $codeAleatoire;
+        
+        $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set mail
+     *
+     * @param string $mail
+     *
+     * @return Reservation
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * Get mail
+     *
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Set billets
+     *
+     * @param array $billets
+     *
+     * @return Reservation
+     */
+    public function setBillets($billets)
+    {
+        $this->billets = $billets;
+        
+        foreach($this->billets as $billet)
+            $billet->setReservation($this);
+        
+        return $this;
+    }
+
+    /**
+     * Get billets
+     *
+     * @return array
+     */
+    public function getBillets()
+    {
+        return $this->billets;
+    }
+
+    /**
+     * Add billet
+     *
+     * @param \Fmd\BookingManagementBundle\Entity\Billet $billet
+     *
+     * @return Reservation
+     */
+    public function addBillet(\Fmd\BookingManagementBundle\Entity\Billet $billet)
+    {
+        $this->billets[] = $billet;
+        $billet->setReservation($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove billet
+     *
+     * @param \Fmd\BookingManagementBundle\Entity\Billet $billet
+     */
+    public function removeBillet(\Fmd\BookingManagementBundle\Entity\Billet $billet)
+    {
+        $this->billets->removeElement($billet);
+    }
+
+    /**
+     * Set numReservation
+     *
+     * @param string $numReservation
+     *
+     * @return Reservation
+     */
+    public function setNumReservation($numReservation)
+    {
+        $this->numReservation = $numReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get numReservation
+     *
+     * @return string
+     */
+    public function getNumReservation()
+    {
+        return $this->numReservation;
+    }
+
+    /**
+     * Set dateReservation
+     *
+     * @param \DateTime $dateReservation
+     *
+     * @return Reservation
+     */
+    public function setDateReservation($dateReservation)
+    {
+        $this->dateReservation = $dateReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateReservation
+     *
+     * @return \DateTime
+     */
+    public function getDateReservation()
+    {
+        return $this->dateReservation;
+    }
+}
