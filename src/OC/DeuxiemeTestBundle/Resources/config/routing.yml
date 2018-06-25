@@ -1,7 +1,0 @@
-oc_deuxieme_test_homepage:
-    path:     /
-    defaults: { _controller: OCDeuxiemeTestBundle:Default:index }
-
-machin :
-    path :    /machin
-    defaults: { _controller : OCDeuxiemeTestBundle:Machin:machin }
