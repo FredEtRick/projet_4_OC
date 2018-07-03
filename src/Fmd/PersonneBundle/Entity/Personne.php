@@ -210,9 +210,9 @@ class Personne
         return 16;
     }
     
-    /*public function getTarifDemiJournee()
+    public function getTarifDemiJournee()
     {
         return $this->getTarifJournee() / 2;
-    } plutot faire la manip direct dans billet en fonction de type billet ?*/
+    }
 }
 

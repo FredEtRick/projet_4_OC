@@ -6,7 +6,7 @@
 
     class PersonneTest extends TestCase
     {
-        public function testGetTarifJourneeMoins4()
+        public function testGetTarifMoins4()
         {
             $bebe = new Personne();
             
@@ -19,12 +19,14 @@
             
             $bebe->setDateNaissance($naissance);
             
-            $result = $bebe->getTarifJournee();
+            $tarifJournee = $bebe->getTarifJournee();
+            $tarifDemiJournee = $bebe->getTarifDemiJournee();
             
-            $this->assertSame(0, $result);
+            $this->assertSame(0, $tarifJournee);
+            $this->assertSame(0, $tarifDemiJournee);
         }
         
-        public function testGetTarifJourneeEnfant() // 4 compris a 12 exclu
+        public function testGetTarifEnfant() // 4 compris a 12 exclu
         {
             $enfant = new Personne();
             
@@ -37,12 +39,14 @@
             
             $enfant->setDateNaissance($naissance);
             
-            $result = $enfant->getTarifJournee();
+            $tarifJournee = $enfant->getTarifJournee();
+            $tarifDemiJournee = $enfant->getTarifDemiJournee();
             
-            $this->assertSame(8, $result);
+            $this->assertSame(8, $tarifJournee);
+            $this->assertSame(4, $tarifDemiJournee);
         }
         
-        public function testGetTarifJourneeAdulteReduction() // 12 ou plus, réduction
+        public function testGetTarifAdulteReduction() // 12 ou plus, réduction
         {
             $personneReduction = new Personne();
             
@@ -56,12 +60,14 @@
             $personneReduction->setDateNaissance($naissance);
             $personneReduction->setReduction(true);
             
-            $result = $personneReduction->getTarifJournee();
+            $tarifJournee = $personneReduction->getTarifJournee();
+            $tarifDemiJournee = $personneReduction->getTarifDemiJournee();
             
-            $this->assertSame(10, $result);
+            $this->assertSame(10, $tarifJournee);
+            $this->assertSame(5, $tarifDemiJournee);
         }
         
-        public function testGetTarifJourneeSenior() // 60 ou plus, sans réduction
+        public function testGetTarifSenior() // 60 ou plus, sans réduction
         {
             $senior = new Personne();
             
@@ -75,12 +81,14 @@
             $senior->setDateNaissance($naissance);
             $senior->setReduction(false);
             
-            $result = $senior->getTarifJournee();
+            $tarifJournee = $senior->getTarifJournee();
+            $tarifDemiJournee = $senior->getTarifDemiJournee();
             
-            $this->assertSame(12, $result);
+            $this->assertSame(12, $tarifJournee);
+            $this->assertSame(6, $tarifDemiJournee);
         }
         
-        public function testGetTarifJourneeAdulte() // 12 a 59, sans réduction
+        public function testGetTarifAdulte() // 12 a 59, sans réduction
         {
             $adulte = new Personne();
             
@@ -94,8 +102,10 @@
             $adulte->setDateNaissance($naissance);
             $adulte->setReduction(false);
             
-            $result = $adulte->getTarifJournee();
+            $tarifJournee = $adulte->getTarifJournee();
+            $tarifDemiJournee = $adulte->getTarifDemiJournee();
             
-            $this->assertSame(16, $result);
+            $this->assertSame(16, $tarifJournee);
+            $this->assertSame(8, $tarifDemiJournee);
         }
     }
