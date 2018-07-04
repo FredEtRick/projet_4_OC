@@ -13,3 +13,5 @@ f7e9ea,::1,GET,http://localhost:8888/Symfony/web/app_dev.php/Fmd/BookingManageme
 560896,::1,GET,http://localhost:8888/Symfony/web/app_dev.php/,1530707206,,200
 7df85b,::1,GET,http://localhost:8888/Symfony/web/app_dev.php/,1530707404,,200
 fb715c,::1,GET,http://localhost:8888/Symfony/web/app_dev.php/Fmd/BookingManagementBundle/,1530707433,,200
+8f8124,::1,GET,http://localhost:8888/Symfony/web/app_dev.php/,1530709011,,200
+a383db,::1,GET,http://localhost:8888/app_dev.php/,1530709497,,200

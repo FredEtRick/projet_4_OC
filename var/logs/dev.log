@@ -83,3 +83,7 @@
 [2018-07-04 12:30:04] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
 [2018-07-04 12:30:33] request.INFO: Matched route "fmd_booking_management_homepage". {"route":"fmd_booking_management_homepage","route_parameters":{"_controller":"Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction","_route":"fmd_booking_management_homepage"},"request_uri":"http://localhost:8888/Symfony/web/app_dev.php/Fmd/BookingManagementBundle/","method":"GET"} []
 [2018-07-04 12:30:33] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
+[2018-07-04 12:56:51] request.INFO: Matched route "fmd_booking_management_homepage". {"route":"fmd_booking_management_homepage","route_parameters":{"_controller":"Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction","_route":"fmd_booking_management_homepage"},"request_uri":"http://localhost:8888/Symfony/web/app_dev.php/","method":"GET"} []
+[2018-07-04 12:56:51] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
+[2018-07-04 13:04:57] request.INFO: Matched route "fmd_booking_management_homepage". {"route":"fmd_booking_management_homepage","route_parameters":{"_controller":"Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction","_route":"fmd_booking_management_homepage"},"request_uri":"http://localhost:8888/app_dev.php/","method":"GET"} []
+[2018-07-04 13:04:57] security.INFO: Populated the TokenStorage with an anonymous Token. [] []

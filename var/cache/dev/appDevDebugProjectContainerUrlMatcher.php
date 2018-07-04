@@ -108,7 +108,7 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
 
         // fmd_booking_management_homepage
-        if ('/Fmd/BookingManagementBundle' === $trimmedPathinfo) {
+        if ('' === $trimmedPathinfo) {
             $ret = array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction',  '_route' => 'fmd_booking_management_homepage',);
             if ('/' === substr($pathinfo, -1)) {
                 // no-op
