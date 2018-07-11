@@ -27,12 +27,7 @@ class __TwigTemplate_64d8e855c0419d3f76d1eff4ac3b01146569c2f5fcad49b93a5f34d5ca0
         <title>test</title>
     </head>
     <body>
-        <p>";
-        // line 6
-        echo twig_escape_filter($this->env, ($context["dateNaissance"] ?? $this->getContext($context, "dateNaissance")), "html", null, true);
-        echo " - ";
-        echo twig_escape_filter($this->env, ($context["tarif"] ?? $this->getContext($context, "tarif")), "html", null, true);
-        echo "</p>
+        <p>machin</p>
     </body>
 </html>
 ";
@@ -49,14 +44,9 @@ class __TwigTemplate_64d8e855c0419d3f76d1eff4ac3b01146569c2f5fcad49b93a5f34d5ca0
         return "@FmdPersonne/Default/index.html.twig";
     }
 
-    public function isTraitable()
-    {
-        return false;
-    }
-
     public function getDebugInfo()
     {
-        return array (  32 => 6,  25 => 1,);
+        return array (  25 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -74,7 +64,7 @@ class __TwigTemplate_64d8e855c0419d3f76d1eff4ac3b01146569c2f5fcad49b93a5f34d5ca0
         <title>test</title>
     </head>
     <body>
-        <p>{{dateNaissance}} - {{tarif}}</p>
+        <p>machin</p>
     </body>
 </html>
 ", "@FmdPersonne/Default/index.html.twig", "/Users/travail/Documents/sdz etc/- - projet 4 - billeterie louvre symfony/github/src/Fmd/PersonneBundle/Resources/views/Default/index.html.twig");

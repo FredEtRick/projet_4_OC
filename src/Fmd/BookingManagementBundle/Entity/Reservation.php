@@ -3,7 +3,6 @@
 namespace Fmd\BookingManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fmd\PersonneBundle\Controller\DefaultController;
 
 /**
  * Reservation
@@ -53,17 +52,19 @@ class Reservation
      */
     public function __construct()
     {
+        /*
+        Finalement, numReservation remplacé par id en auto incrémente clé primaire de table dans BDD !!!
+        
+        // pour que le numéro de réservation soit unique, on y insère le timestamp et l'ip (deux numéros identiques signifierait deux réservations en même temps avec le même IP) et pour plus d'assurance, on y ajoute un code aléatoire.
+        $timeStamp = time();
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $hash = sha1($timeStamp . $ip); // le timestamp et l'ip sont hashés pour préserver la vie privée du visiteur
         $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
-        $doublon = null;
-        $codeAleatoire = '';
-        $controleur = new DefaultController();
-        do
-        {
-            $codeAleatoire = substr(str_shuffle($caracteres), 0, 30);
-            $doublon = $controleur->chercheDoublon($codeAleatoire); // Obligé de passer par le controleur car symfony ne laisse pas utiliser getDoctrine depuis autre chose qu'un controleur ! (je comprend pas pourquoi)
-        } while ($doublon != null);
-        $this->numReservation = $codeAleatoire;
-        $this->dateReservation = date('d-m-Y');
+        $melange = substr(str_shuffle($caracteres), 0, 12);
+        $this->numReservation = $hash . $melange;*/
+        
+        // La date de réservation est celle a laquelle on veut venir, pas la date du jour !!! Doit être renseignée dans le formulaire !
+        //$this->dateReservation = new \DateTime();
         
         $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
     }

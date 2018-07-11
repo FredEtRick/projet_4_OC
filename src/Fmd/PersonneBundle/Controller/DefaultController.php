@@ -9,32 +9,6 @@ use Fmd\BookingManagementBundle\Entity\Billet;
 
 class DefaultController extends Controller
 {
-    public function getManagerPerso() // pour pouvoir avoir accès aux données depuis autre chose qu'un controleur ! (depuis une entity en l'occurrence, cf le constructeur de reservation qui a besoin de comparer une valeur avec celles de toutes les autres réservations, et impossible d'avoir un manager en dehors d'un controlleur !!!)
-    {
-        return $this->getDoctrine()->getManager();
-    }
-    
-    public function getRepositoryPersonne()
-    {
-        return $this->getManagerPerso()->getRepository('FmdPersonneBundle:Personne');
-    }
-    
-    public function getRepositoryReservation()
-    {
-        return $this->getManagerPerso()->getRepository('FmdBookingManagementBundle:Reservation');
-    }
-    
-    public function getRepositoryBillet()
-    {
-        return $this->getManagerPerso()->getRepository('FmdBookingManagementBundle:Billet');
-    }
-    
-    public function chercheDoublon($codeAleatoire)
-    {
-        $repository = $this->getRepositoryReservation();
-        return $repository->findOneBy(array('numReservation' => $codeAleatoire));
-    }
-    
     public function indexAction()
     {
         /*$personne = new Personne();
@@ -77,5 +51,14 @@ class DefaultController extends Controller
         
         $reservation->setMail('fred.malard@wanadoo.fr');
         $reservation->setBillets($billets);
+        $reservation->setDateReservation(new \DateTime('2018-08-10'));
+        
+        $em->persist($reservation);
+        $em->persist($billetFrederic);
+        $em->persist($billetMachin);
+        
+        $em->flush();
+        
+        return $this->render('@FmdPersonne/Default/index.html.twig');
     }
 }
