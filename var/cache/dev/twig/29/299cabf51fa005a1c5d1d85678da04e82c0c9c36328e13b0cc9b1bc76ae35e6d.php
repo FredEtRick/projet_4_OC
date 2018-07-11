@@ -85,6 +85,6 @@ class __TwigTemplate_04ceef67b7aa53c478afef91fe2771fd55621bffb67c069e808600231f2
             </trace>
 {% endfor %}
         </traces>
-", "@Twig/Exception/traces.xml.twig", "/Users/travail/Documents/sdz etc/- - projet 4 - billeterie louvre symfony/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views/Exception/traces.xml.twig");
+", "@Twig/Exception/traces.xml.twig", "/Users/travail/Documents/sdz etc/- - projet 4 - billeterie louvre symfony/github/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views/Exception/traces.xml.twig");
     }
 }

@@ -59,6 +59,6 @@ class __TwigTemplate_1a0a819ad11e722f7e9d2923fc23f694533e3054facfbf4069b560a5199
     public function getSourceContext()
     {
         return new Twig_Source("{{ { 'error': { 'code': status_code, 'message': status_text, 'exception': exception.toarray } }|json_encode|raw }}
-", "@Twig/Exception/exception.json.twig", "/Users/travail/Documents/sdz etc/- - projet 4 - billeterie louvre symfony/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views/Exception/exception.json.twig");
+", "@Twig/Exception/exception.json.twig", "/Users/travail/Documents/sdz etc/- - projet 4 - billeterie louvre symfony/github/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views/Exception/exception.json.twig");
     }
 }

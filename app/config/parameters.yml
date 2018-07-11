@@ -7,7 +7,7 @@ parameters:
     database_host: localhost
     database_port: 8889
 #>>>>>>> brancheInvolontaire
-    database_name: symfony
+    database_name: Louvre
     database_user: root
     database_password: root
     mailer_transport: smtp

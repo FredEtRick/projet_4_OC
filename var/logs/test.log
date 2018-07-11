@@ -95,3 +95,5 @@
 [2018-07-04 14:52:30] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
 [2018-07-04 14:54:22] request.INFO: Matched route "fmd_booking_management_homepage". {"route":"fmd_booking_management_homepage","route_parameters":{"_controller":"Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction","_route":"fmd_booking_management_homepage"},"request_uri":"http://localhost/","method":"GET"} []
 [2018-07-04 14:54:22] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
+[2018-07-09 19:16:16] request.INFO: Matched route "fmd_booking_management_homepage". {"route":"fmd_booking_management_homepage","route_parameters":{"_controller":"Fmd\\BookingManagementBundle\\Controller\\DefaultController::indexAction","_route":"fmd_booking_management_homepage"},"request_uri":"http://localhost/","method":"GET"} []
+[2018-07-09 19:16:16] security.INFO: Populated the TokenStorage with an anonymous Token. [] []

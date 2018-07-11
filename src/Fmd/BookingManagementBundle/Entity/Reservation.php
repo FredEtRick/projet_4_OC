@@ -3,6 +3,7 @@
 namespace Fmd\BookingManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Fmd\PersonneBundle\Controller\DefaultController;
 
 /**
  * Reservation
@@ -55,13 +56,14 @@ class Reservation
         $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
         $doublon = null;
         $codeAleatoire = '';
-        $repository = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
+        $controleur = new DefaultController();
         do
         {
             $codeAleatoire = substr(str_shuffle($caracteres), 0, 30);
-            $doublon = $repository->findOneBy(array('numReservation' => $codeAleatoire));
+            $doublon = $controleur->chercheDoublon($codeAleatoire); // Obligé de passer par le controleur car symfony ne laisse pas utiliser getDoctrine depuis autre chose qu'un controleur ! (je comprend pas pourquoi)
         } while ($doublon != null);
         $this->numReservation = $codeAleatoire;
+        $this->dateReservation = date('d-m-Y');
         
         $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
     }
