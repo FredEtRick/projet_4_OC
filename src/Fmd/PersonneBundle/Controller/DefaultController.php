@@ -28,37 +28,48 @@ class DefaultController extends Controller
         
         return $this->render('@FmdPersonne/Default/index.html.twig', array('dateNaissance' => date_format($dateNaissance, 'd/m/Y'), 'tarif' => $tarif));*/
         
-        $em = $this->getDoctrine()->getManager();
+        
+        
+        /*$em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FmdPersonneBundle:Personne');
         
-        $frederic = $repository->find(1);
-        $machin = $repository->find(30);
+        $QuelQuun = $repository->find(31);
+        $UnotpHerson = $repository->find(32);
+        $HankHorunotpHerson = $repository->find(33);
         
         $reservation = new Reservation();
         
-        $billetFrederic = new Billet();
-        $billetMachin = new Billet();
+        $billetQuelQuun = new Billet();
+        $billetUnotpHerson = new Billet();
+        $billetHankHorunotpHerson = new Billet();
         
-        $billetFrederic->setPersonne($frederic);
-        $billetFrederic->setJourneeEntiere(true);
-        $billetFrederic->setReservation($reservation);
+        $billetQuelQuun->setPersonne($QuelQuun);
+        $billetQuelQuun->setJourneeEntiere(false);
+        $billetQuelQuun->setReservation($reservation);
         
-        $billetMachin->setPersonne($machin);
-        $billetMachin->setJourneeEntiere(true);
-        $billetMachin->setReservation($reservation);
+        $billetUnotpHerson->setPersonne($UnotpHerson);
+        $billetUnotpHerson->setJourneeEntiere(false);
+        $billetUnotpHerson->setReservation($reservation);
         
-        $billets = array($billetFrederic, $billetMachin);
+        $billetHankHorunotpHerson->setPersonne($HankHorunotpHerson);
+        $billetHankHorunotpHerson->setJourneeEntiere(false);
+        $billetHankHorunotpHerson->setReservation($reservation);
         
-        $reservation->setMail('fred.malard@wanadoo.fr');
+        $billets = array($billetQuelQuun, $billetUnotpHerson, $billetHankHorunotpHerson);
+        
+        $reservation->setMail('quelquun@sfr.fr');
         $reservation->setBillets($billets);
-        $reservation->setDateReservation(new \DateTime('2018-08-10'));
+        $reservation->setDateReservation(new \DateTime('2018-07-30'));
         
         $em->persist($reservation);
-        $em->persist($billetFrederic);
-        $em->persist($billetMachin);
+        $em->persist($billetQuelQuun);
+        $em->persist($billetUnotpHerson);
+        $em->persist($billetHankHorunotpHerson);
         
         $em->flush();
         
-        return $this->render('@FmdPersonne/Default/index.html.twig');
+        return $this->render('@FmdPersonne/Default/index.html.twig');*/
+        
+        
     }
 }

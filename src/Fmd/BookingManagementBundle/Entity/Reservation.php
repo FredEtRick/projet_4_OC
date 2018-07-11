@@ -34,13 +34,6 @@ class Reservation
     private $billets;
     
     /**
-     * @var string
-     * 
-     * @ORM\Column(name="numReservation", type="string", length=255)
-     */
-    private $numReservation;
-    
-    /**
      * @var \DateTime
      * 
      * @ORM\Column(name="dateReservation", type="date")
@@ -153,30 +146,6 @@ class Reservation
     public function removeBillet(\Fmd\BookingManagementBundle\Entity\Billet $billet)
     {
         $this->billets->removeElement($billet);
-    }
-
-    /**
-     * Set numReservation
-     *
-     * @param string $numReservation
-     *
-     * @return Reservation
-     */
-    public function setNumReservation($numReservation)
-    {
-        $this->numReservation = $numReservation;
-
-        return $this;
-    }
-
-    /**
-     * Get numReservation
-     *
-     * @return string
-     */
-    public function getNumReservation()
-    {
-        return $this->numReservation;
     }
 
     /**
