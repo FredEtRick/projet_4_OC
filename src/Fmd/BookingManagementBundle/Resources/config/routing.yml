@@ -1,3 +1,19 @@
 fmd_booking_management_homepage:
     path:     /
     defaults: { _controller: FmdBookingManagementBundle:Default:index }
+    
+fmd_booking_management_verifMail:
+    path:     /verifMail
+    defaults: { _controller: FmdBookingManagementBundle:Default:verifMail }
+    
+fmd_booking_management_choix:
+    path:     /choix
+    defaults: { _controller: FmdBookingManagementBundle:Default:choix }
+    
+fmd_booking_management_reservation:
+    path:     /reservation
+    defaults: { _controller: FmdBookingManagementBundle:Default:reservation }
+    
+fmd_booking_management_consultation:
+    path:     /consultation
+    defaults: { _controller: FmdBookingManagementBundle:Default:consultation }

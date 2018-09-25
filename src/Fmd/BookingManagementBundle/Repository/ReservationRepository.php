@@ -10,4 +10,12 @@ namespace Fmd\BookingManagementBundle\Repository;
  */
 class ReservationRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*public function idReservationViaMail($mail)
+    {
+        //$repository = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
+        $query = $this->_em->createQuery('SELECT r.id FROM FmdBookingManagementBundle:Reservation r WHERE r.mail = :mail');
+        $query->setParameter('mail', $mail);
+
+        return $query->getResult();
+    }*/
 }

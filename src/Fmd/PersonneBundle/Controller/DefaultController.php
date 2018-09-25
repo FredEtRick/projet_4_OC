@@ -11,6 +11,13 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+        return $this->render('@FmdPersonne/Default/index.php.twig');
+    }
+}
+
+
+
+
         /*$personne = new Personne();
         
         $personne->setPrenom('Hon');
@@ -69,7 +76,3 @@ class DefaultController extends Controller
         $em->flush();
         
         return $this->render('@FmdPersonne/Default/index.html.twig');*/
-        
-        
-    }
-}
