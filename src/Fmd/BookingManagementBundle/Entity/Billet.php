@@ -22,7 +22,7 @@ class Billet
     private $id;
     
     /**
-     * @ORM\OneToOne(targetEntity="Fmd\PersonneBundle\Entity\Personne", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Fmd\PersonneBundle\Entity\Personne")
      * @ORM\JoinColumn(nullable=false)
      */
     private $personne;

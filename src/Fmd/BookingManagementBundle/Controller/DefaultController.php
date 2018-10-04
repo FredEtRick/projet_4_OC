@@ -46,17 +46,20 @@ class DefaultController extends Controller
         }
     }
     
-    public function choixAction()
+    public function choixAction(Request $request)
     {
         $ancienVisiteur = true;
         $choix = $_POST['choix'];
         if ($choix == 'reserver')
         {
+            $session = $request->getSession();
+            $mailSession = $session->get('mail');
             // préparer les données : précédents visiteurs etc
             // requetes doivent être faites dans repository !!!
-            
+            $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+            $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
 
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur));
+            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail));
         }
         elseif ($choix == 'consulter')
         {

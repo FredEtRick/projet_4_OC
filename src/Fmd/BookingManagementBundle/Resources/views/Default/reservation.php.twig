@@ -7,7 +7,21 @@
         <form method="post" action=" ? ">
             {% if ancienVisiteur %}
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
-                
+                {% for personne in personnesLieesAuMail %}
+                    <p>
+                        {{ loop.index }}{% if loop.index == 1 %}er{% else %}ème{% endif %} visiteur :
+                    </p>
+                    <p>
+                        Prénom : {{ personne.prenom }}<br />
+                        Nom : {{ personne.nom }}<br />
+                        Pays : {{ personne.pays }}<br />
+                        Date de naissance : {{ personne.dateNaissance }}<br />
+                        Réduction : {{ personne.reduction }}
+                    </p>
+                    <p>
+                        <!-- boutons pour supprimer ou modifier la personne -->
+                    </p>
+                {% endfor %}
 
                 <!-- recup infos précédents visiteurs... En amont dans controleur ? -->
                 <!-- mettre bouton pour supprimer visiteur ? javascript ou jquery -->
