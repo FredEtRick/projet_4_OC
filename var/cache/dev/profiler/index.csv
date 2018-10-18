@@ -53,3 +53,12 @@ b1cb5a,::1,POST,http://localhost:8888/app_dev.php/choix,1539859084,,200
 7f4cdc,::1,POST,http://localhost:8888/app_dev.php/choix,1539859088,,200
 64aee9,::1,POST,http://localhost:8888/app_dev.php/choix,1539859436,,200
 1e811f,::1,POST,http://localhost:8888/app_dev.php/choix,1539859443,,200
+a4ea54,::1,POST,http://localhost:8888/app_dev.php/choix,1539860555,,200
+ca6a1b,::1,GET,http://localhost:8888/app_dev.php/choix,1539860560,ba1d76,200
+ba1d76,::1,POST,http://localhost:8888/app_dev.php/choix,1539860560,,500
+16b2e2,::1,POST,http://localhost:8888/app_dev.php/choix,1539862427,,200
+fe383e,::1,GET,http://localhost:8888/app_dev.php/choix,1539862429,7c13f8,200
+7c13f8,::1,POST,http://localhost:8888/app_dev.php/choix,1539862430,,500
+09c80c,::1,POST,http://localhost:8888/app_dev.php/choix,1539862594,,200
+fdf349,::1,GET,http://localhost:8888/app_dev.php/choix,1539862595,d4a0d4,200
+d4a0d4,::1,POST,http://localhost:8888/app_dev.php/choix,1539862595,,500

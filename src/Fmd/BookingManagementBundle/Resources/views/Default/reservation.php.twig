@@ -34,17 +34,19 @@
                     <input id="pays1" type="text" name="pays1" /><br /> <!-- modifier en mettant liste de tous les pays ? -->
                 <label for="dateNaissance1">Date de naissance : </label>
                     <input id="dateNaissance1" type="text" name="dateNaissance1" /> Format : jj/mm/aaaa. Exemple : écrivez 01/12/1980 pour le premier décembre 1980.<br />
-                <input type="checkbox" name="reduction1" id="reduction1" value="reduction1" /><label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
+                <input type="checkbox" name="reduction1" id="reduction1" value="reduction1" />
+                    <label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
                 <button onclick="supprimerPersonneNouvelle(1)">Supprimer</button>
             </p>
             <p id="pAjouterPersonne">
-                <button onclick="ajouterPersonne">Ajouter une personne </button>
+                <button onclick="ajouterPersonne()">Ajouter une personne </button>
             </p>
             
             <!-- date reservation + journée entière ? -->
             
         </form>
         <script type="text/javascript">
+            var indexDernierePersonne = 1;
             function supprimerPersonne(indexPersonne)
             {
                 var formulaire = document.getElementById("formulaire");
@@ -56,6 +58,88 @@
                 var formulaire = document.getElementById("formulaire");
                 var pPersonneElt = document.getElementById("pPersonne" + indexPersonne);
                 formulaire.removeChild(pPersonneElt);
+            }
+            function ajouterPersonne()
+            {
+                // incrémentation de l'index de dernière personne
+                ++indexDernierePersonne;
+
+                // variables utiles pour la suite
+                var formulaire = document.getElementById("formulaire");
+                var pAjouterPersonne = document.getElementById("pAjouterPersonne");
+
+                // création du nouveau paragraphe qui contiendra les champs
+                var pNouvellePersonne = document.createElement("p");
+                pNouvellePersonne.setAttribute("id", "pPersonne" + indexDernierePersonne);
+
+                // création du champs de prénom
+                var nouveauLabelPrenom = document.createElement("LABEL");
+                nouveauLabelPrenom.setAttribute("for", "prenom" + indexDernierePersonne);
+                var nouveauChampsPrenom = document.createElement("INPUT");
+                nouveauChampsPrenom.setAttribute("type", "text");
+                nouveauChampsPrenom.setAttribute("id", "prenom" + indexDernierePersonne);
+                nouveauChampsPrenom.setAttribute("name", "prenom" + indexDernierePersonne);
+                var nouveauBrPrenom = document.createElement("br");
+
+                // création du champs de nom
+                var nouveauLabelNom = document.createElement("LABEL");
+                nouveauLabelNom.setAttribute("for", "nom" + indexDernierePersonne);
+                var nouveauChampsNom = document.createElement("INPUT");
+                nouveauChampsNom.setAttribute("type", "text");
+                nouveauChampsNom.setAttribute("id", "nom" + indexDernierePersonne);
+                nouveauChampsNom.setAttribute("name", "nom" + indexDernierePersonne);
+                var nouveauBrNom = document.createElement("br");
+
+                // création du champs de pays
+                var nouveauLabelPays = document.createElement("LABEL");
+                nouveauLabelPays.setAttribute("for", "pays" + indexDernierePersonne);
+                var nouveauChampsPays = document.createElement("INPUT");
+                nouveauChampsPays.setAttribute("type", "text");
+                nouveauChampsPays.setAttribute("id", "pays" + indexDernierePersonne);
+                nouveauChampsPays.setAttribute("name", "pays" + indexDernierePersonne);
+                var nouveauBrPays = document.createElement("br");
+
+                // création du champs de date de naissance
+                var nouveauLabelDate = document.createElement("LABEL");
+                nouveauLabelDate.setAttribute("for", "date" + indexDernierePersonne);
+                var nouveauChampsDate = document.createElement("INPUT");
+                nouveauChampsDate.setAttribute("type", "text");
+                nouveauChampsDate.setAttribute("id", "date" + indexDernierePersonne);
+                nouveauChampsDate.setAttribute("name", "date" + indexDernierePersonne);
+                var nouveauBrDate = document.createElement("br");
+
+                // création du champs de reduction
+                var nouveauLabelReduction = document.createElement("LABEL");
+                nouveauLabelReduction.setAttribute("for", "reduction" + indexDernierePersonne);
+                var nouveauChampsReduction = document.createElement("INPUT");
+                nouveauChampsReduction.setAttribute("type", "checkbox");
+                nouveauChampsReduction.setAttribute("id", "reduction" + indexDernierePersonne);
+                nouveauChampsReduction.setAttribute("name", "reduction" + indexDernierePersonne);
+                nouveauChampsReduction.setAttribute("value", "reduction");
+                var nouveauBrReduction = document.createElement("br");
+
+                // création du bouton supprimer
+                var nouveauBoutonSupprimer = document.createElement("button");
+                nouveauBoutonSupprimer.setAttribute("onclick", "supprimerPersonneNouvelle(" + indexDernierePersonne + ")");
+
+                // insertion des éléments dans la page
+                formulaire.insertBefore(pNouvellePersonne, pAjouterPersonne);
+                pNouvellePersonne.appendChild(nouveauLabelPrenom);
+                pNouvellePersonne.appendChild(nouveauChampsPrenom);
+                pNouvellePersonne.appendChild(nouveauBrPrenom);
+                pNouvellePersonne.appendChild(nouveauLabelNom);
+                pNouvellePersonne.appendChild(nouveauChampsNom);
+                pNouvellePersonne.appendChild(nouveauBrNom);
+                pNouvellePersonne.appendChild(nouveauLabelPays);
+                pNouvellePersonne.appendChild(nouveauChampsPays);
+                pNouvellePersonne.appendChild(nouveauBrPays);
+                pNouvellePersonne.appendChild(nouveauLabelDate);
+                pNouvellePersonne.appendChild(nouveauChampsDate);
+                pNouvellePersonne.appendChild(nouveauBrDate);
+                pNouvellePersonne.appendChild(nouveauChampsReduction);
+                pNouvellePersonne.appendChild(nouveauLabelReduction);
+                pNouvellePersonne.appendChild(nouveauBrReduction);
+                pNouvellePersonne.appendChild(nouveauBoutonSupprimer);
             }
         </script>
     </body>
