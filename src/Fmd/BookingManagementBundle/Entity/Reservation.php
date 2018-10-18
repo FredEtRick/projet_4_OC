@@ -171,4 +171,9 @@ class Reservation
     {
         return $this->dateReservation;
     }
+
+    public function getDateReservationString()
+    {
+        return $this->dateReservation->format('d/m/Y H:i:s');
+    }
 }

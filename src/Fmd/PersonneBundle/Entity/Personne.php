@@ -212,5 +212,10 @@ class Personne
     {
         return $this->getTarifJournee() / 2;
     }
+
+    public function getDateNaissanceString()
+    {
+        return $this->dateNaissance->format('d/m/Y H:i:s');
+    }
 }
 

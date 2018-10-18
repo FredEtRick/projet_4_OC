@@ -23,7 +23,7 @@ class Billet
     
     /**
      * @ORM\ManyToOne(targetEntity="Fmd\PersonneBundle\Entity\Personne")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="personne_id", referencedColumnName="id", nullable=false)
      */
     private $personne;
     
