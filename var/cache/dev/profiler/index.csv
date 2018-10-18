@@ -38,3 +38,6 @@ f5561f,::1,POST,http://localhost:8888/app_dev.php/choix,1539622429,,500
 e52e4a,::1,GET,http://localhost:8888/app_dev.php/choix,1539849556,3740f9,200
 3740f9,::1,POST,http://localhost:8888/app_dev.php/choix,1539849556,,500
 028dc5,::1,POST,http://localhost:8888/app_dev.php/choix,1539849714,,200
+804e29,::1,GET,http://localhost:8888/app_dev.php/,1539854935,,200
+442486,::1,POST,http://localhost:8888/app_dev.php/choix,1539855145,,200
+33453c,::1,POST,http://localhost:8888/app_dev.php/choix,1539855218,,200

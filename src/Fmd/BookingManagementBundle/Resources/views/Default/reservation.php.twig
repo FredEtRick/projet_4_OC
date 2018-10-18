@@ -4,23 +4,26 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
-        <form method="post" action=" ? ">
+        <form method="post" action=" ? " id="formulaire">
             {% if ancienVisiteur %}
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
                 {% for personne in personnesLieesAuMail %}
-                    <p>
-                        {{ loop.index }}{% if loop.index == 1 %}er{% else %}ème{% endif %} visiteur :
-                    </p>
-                    <p>
-                        Prénom : {{ personne.prenom }}<br />
-                        Nom : {{ personne.nom }}<br />
-                        Pays : {{ personne.pays }}<br />
-                        Date de naissance : {{ personne.getDateNaissanceString() }}<br />
-                        Réduction : {{ personne.reduction }}
-                    </p>
-                    <p>
-                        <!-- boutons pour supprimer ou modifier la personne -->
-                    </p>
+                    <div id="divPersonne{{ loop.index }}">
+                        <p>
+                            {{ loop.index }}{% if loop.index == 1 %}er{% else %}ème{% endif %} visiteur :
+                        </p>
+                        <input type="hidden" id="idPersonne{{ loop.index }}" name="idPersonne{{ loop.index }}" value="{{ personne.id }}" />
+                        <p>
+                            Prénom : {{ personne.prenom }}<br />
+                            Nom : {{ personne.nom }}<br />
+                            Pays : {{ personne.pays }}<br />
+                            Date de naissance : {{ personne.getDateNaissanceString() }}<br />
+                            Réduction : {{ personne.reduction }}
+                        </p>
+                        <p>
+                            <button onclick="supprimerPersonne({{ loop.index }})">Supprimer</button>
+                        </p>
+                    </div>
                 {% endfor %}
 
                 <!-- recup infos précédents visiteurs... En amont dans controleur ? -->
@@ -35,5 +38,13 @@
             <!-- date reservation + journée entière ? -->
             
         </form>
+        <script type="text/javascript">
+            function supprimerPersonne(indexPersonne)
+            {
+                var formulaire = document.getElementById("formulaire");
+                var divPersonneElt = document.getElementById("divPersonne" + indexPersonne);
+                formulaire.removeChild(divPersonneElt);
+            }
+        </script>
     </body>
 </html>
