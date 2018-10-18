@@ -9,31 +9,37 @@
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
                 {% for personne in personnesLieesAuMail %}
                     <div id="divPersonne{{ loop.index }}">
-                        <p>
-                            {{ loop.index }}{% if loop.index == 1 %}er{% else %}ème{% endif %} visiteur :
-                        </p>
                         <input type="hidden" id="idPersonne{{ loop.index }}" name="idPersonne{{ loop.index }}" value="{{ personne.id }}" />
                         <p>
                             Prénom : {{ personne.prenom }}<br />
                             Nom : {{ personne.nom }}<br />
                             Pays : {{ personne.pays }}<br />
                             Date de naissance : {{ personne.getDateNaissanceString() }}<br />
-                            Réduction : {{ personne.reduction }}
-                        </p>
-                        <p>
+                            Réduction : {% if personne.reduction %}Oui{% else %}Non{% endif %}<br />
                             <button onclick="supprimerPersonne({{ loop.index }})">Supprimer</button>
                         </p>
                     </div>
                 {% endfor %}
-
-                <!-- recup infos précédents visiteurs... En amont dans controleur ? -->
-                <!-- mettre bouton pour supprimer visiteur ? javascript ou jquery -->
                 <p>Souhaitez vous réserver pour d'autres personnes ?</p>
             {% else %}
                 <p>Donnez vous s'il vous plait les informations suivantes pour chacun des visiteurs attendus :</p>
             {% endif %}
             <!-- infos visiteurs -->
-            
+            <p id="pPersonne1">
+                <label for="prenom1">Prénom : </label>
+                    <input id="prenom1" type="text" name="prenom1" /><br />
+                <label for="nom1">Nom : </label>
+                    <input id="nom1" type="text" name="nom1" /><br />
+                <label for="pays1">Pays : </label>
+                    <input id="pays1" type="text" name="pays1" /><br /> <!-- modifier en mettant liste de tous les pays ? -->
+                <label for="dateNaissance1">Date de naissance : </label>
+                    <input id="dateNaissance1" type="text" name="dateNaissance1" /> Format : jj/mm/aaaa. Exemple : écrivez 01/12/1980 pour le premier décembre 1980.<br />
+                <input type="checkbox" name="reduction1" id="reduction1" value="reduction1" /><label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
+                <button onclick="supprimerPersonneNouvelle(1)">Supprimer</button>
+            </p>
+            <p id="pAjouterPersonne">
+                <button onclick="ajouterPersonne">Ajouter une personne </button>
+            </p>
             
             <!-- date reservation + journée entière ? -->
             
@@ -44,6 +50,12 @@
                 var formulaire = document.getElementById("formulaire");
                 var divPersonneElt = document.getElementById("divPersonne" + indexPersonne);
                 formulaire.removeChild(divPersonneElt);
+            }
+            function supprimerPersonneNouvelle(indexPersonne)
+            {
+                var formulaire = document.getElementById("formulaire");
+                var pPersonneElt = document.getElementById("pPersonne" + indexPersonne);
+                formulaire.removeChild(pPersonneElt);
             }
         </script>
     </body>

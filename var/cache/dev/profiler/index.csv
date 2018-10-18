@@ -41,3 +41,15 @@ e52e4a,::1,GET,http://localhost:8888/app_dev.php/choix,1539849556,3740f9,200
 804e29,::1,GET,http://localhost:8888/app_dev.php/,1539854935,,200
 442486,::1,POST,http://localhost:8888/app_dev.php/choix,1539855145,,200
 33453c,::1,POST,http://localhost:8888/app_dev.php/choix,1539855218,,200
+4ee012,::1,POST,http://localhost:8888/app_dev.php/choix,1539857251,,200
+36a553,::1,GET,http://localhost:8888/app_dev.php/choix,1539858348,806c47,200
+806c47,::1,POST,http://localhost:8888/app_dev.php/choix,1539858348,,500
+9e57a0,::1,GET,http://localhost:8888/app_dev.php/choix,1539858490,798dce,200
+798dce,::1,POST,http://localhost:8888/app_dev.php/choix,1539858490,,500
+b994f3,::1,POST,http://localhost:8888/app_dev.php/choix,1539858573,,200
+e04549,::1,POST,http://localhost:8888/app_dev.php/choix,1539858608,,200
+62967a,::1,POST,http://localhost:8888/app_dev.php/choix,1539858918,,200
+b1cb5a,::1,POST,http://localhost:8888/app_dev.php/choix,1539859084,,200
+7f4cdc,::1,POST,http://localhost:8888/app_dev.php/choix,1539859088,,200
+64aee9,::1,POST,http://localhost:8888/app_dev.php/choix,1539859436,,200
+1e811f,::1,POST,http://localhost:8888/app_dev.php/choix,1539859443,,200
