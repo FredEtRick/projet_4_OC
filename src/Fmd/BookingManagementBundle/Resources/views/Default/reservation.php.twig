@@ -44,6 +44,24 @@
             
             <!-- date reservation + journée entière ? -->
             
+            <p>
+                Veuillez indiquer les informations générales relatives a la réservation :
+            </p>
+            <p>
+                <label for="dateVisite">
+                    Date de visite du musée : 
+                </label>
+                <input type="text" name="dateVisite" id="dateVisite" /> Format : jj/mm/aaaa. Exemple : écrivez 10/06/2019 pour le dix juin 2019.<br />
+                Souhaitez vous arriver avant ou après 14h ? Après 14h, le tarif demi-journée s'applique, induisant une division par deux des prix de billets.<br />
+                <input type="radio" name="demiJournee" value="oui" id="oui" />
+                    <label for="oui"> Nous arriverons après 14h</label><br />
+                <input type="radio" name="demiJournee" value="non" />
+                    <label for="non"> Nous arriverons avant 14h</label>
+            </p>
+
+
+            <input type="submit" value="Soumettre le formulaire" />
+
         </form>
         <script type="text/javascript">
             var indexDernierePersonne = 1;
