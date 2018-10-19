@@ -34,14 +34,6 @@ class Billet
     private $reservation;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="journeeEntiere", type="boolean")
-     */
-    private $journeeEntiere;
-
-
-    /**
      * Get id
      *
      * @return int
@@ -49,30 +41,6 @@ class Billet
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set journeeEntiere
-     *
-     * @param boolean $journeeEntiere
-     *
-     * @return Billet
-     */
-    public function setJourneeEntiere($journeeEntiere)
-    {
-        $this->journeeEntiere = $journeeEntiere;
-
-        return $this;
-    }
-
-    /**
-     * Get journeeEntiere
-     *
-     * @return bool
-     */
-    public function getJourneeEntiere()
-    {
-        return $this->journeeEntiere;
     }
 
     /**

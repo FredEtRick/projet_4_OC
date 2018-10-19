@@ -39,6 +39,13 @@ class Reservation
      * @ORM\Column(name="dateReservation", type="date")
      */
     private $dateReservation;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="demiJournee", type="demiJournee")
+     */
+    private $demiJournee;
     
     /**
      * Constructor
@@ -175,5 +182,29 @@ class Reservation
     public function getDateReservationString()
     {
         return $this->dateReservation->format('d/m/Y H:i:s');
+    }
+
+    /**
+     * Set demiJournee
+     *
+     * @param boolean $demiJournee
+     *
+     * @return Billet
+     */
+    public function setDemiJournee($demiJournee)
+    {
+        $this->demiJournee = $demiJournee;
+
+        return $this;
+    }
+
+    /**
+     * Get demiJournee
+     *
+     * @return bool
+     */
+    public function getDemiJournee()
+    {
+        return $this->demiJournee;
     }
 }
