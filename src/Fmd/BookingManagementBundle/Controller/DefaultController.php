@@ -42,6 +42,7 @@ class DefaultController extends Controller
         {
             $session->set('ancienVisiteur', false);
             $ancienVisiteur = false;
+            echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
             return $this->render('@FmdBookingManagement/Default/reservation.php.twig');
         }
     }
@@ -58,6 +59,7 @@ class DefaultController extends Controller
             // requetes doivent être faites dans repository !!!
             $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
             $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
+            $session->set("nombrePersonnesLieesAuMail", count($personnesLieesAuMail));
 
             return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail));
         }
@@ -70,5 +72,57 @@ class DefaultController extends Controller
             return $this->render('@FmdBookingManagement/Default/index.php.twig');
             // rajouter un message d'erreur
         }
+    }
+
+    public function traitementAction(Request $request)
+    {
+        // d'abord essayer d'effectuer le paiement, et ensuite, si paiement réussi, faire la suite ?
+
+        $session = $request->getSession();
+        $mail = $session->get('mail');
+        $ancienVisiteur = $session->get('ancienVisiteur');
+        $visiteurs = new array();
+        $date = $_POST['dateVisite'];
+        $demiJournee = $_POST['demiJournee'];
+        $cpt = 1;
+        $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
+
+        // creer la reservation en BDD avec des methodes de reservation repository
+
+        // ajout des anciens visiteurs conservés
+        for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
+        {
+            if (isset($_POST["idPersonne" . $i]))
+            {
+                // créer des billets qui pointent vers la réservation courante et vers l'id de la chaque personne. Aura surement besoin d'une nouvelle méthode du repository de billet
+            }
+        }
+
+        // ajout des nouveaux visiteurs
+        $indexDernierePersonne = $_POST['indexDernierePersonne'];
+        for ($i=1 ; $i<=$indexDernierePersonne ; $i++)
+        {
+            if (isset($_POST['prenom' . $i])) // si l'une des caractéristiques d'un visiteur existe c'est que le visiteur existe. Doit faire cette vérification car on peut supprimer des visiteurs donc entre le visiteur 1 et le dernier il y a peut être des trous dans le compte
+            {
+                // création personnes
+                $visiteurs[$cpt] = new Personne();
+                $visiteurs[$cpt]->prenom = $_POST['prenom' . $i];
+                $visiteurs[$cpt]->nom = $_POST['nom' . $i];
+                $visiteurs[$cpt]->pays = $_POST['pays' . $i];
+                $visiteurs[$cpt]->dateNaissance = $_POST['dateNaissance' . $i];
+                $visiteurs[$cpt]->reduction = $_POST['reduction' . $i];
+
+                // appeler la méthode de personne repository pour mettre la personne dans la BDD (créer ces fonction dans un premier temps bien sur)
+
+
+                // créer les billet qui font les liens, méthode billet repository
+
+
+                $cpt++;
+            }
+        }
+
+        return $this->render('@FmdBookingManagement/Default/traitement.php.twig');
+        // remarque : vraiment besoin d'afficher quelque chose pour le traitement ? Rediriger vers d'autres actions en fonction du résultat du traitement ? Ou faire un if dans cette action et afficher la suite en fonction ?
     }
 }

@@ -30,3 +30,16 @@ cb52ea,::1,POST,http://localhost:8888/app_dev.php/choix,1539945680,,200
 a1cfba,::1,POST,http://localhost:8888/app_dev.php/choix,1539949135,,200
 6e2501,::1,POST,http://localhost:8888/app_dev.php/choix,1539950073,,200
 fcc2b2,::1,POST,http://localhost:8888/app_dev.php/choix,1539950119,,200
+7f6e4e,::1,GET,http://localhost:8888/app_dev.php/,1540126934,,200
+aa0aa2,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540127053,98758f,200
+98758f,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540127053,,500
+68a64d,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540127354,cf8544,200
+cf8544,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540127354,,500
+fed230,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540127372,90453c,200
+90453c,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540127372,,500
+5174ce,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540127390,5e53b6,200
+5e53b6,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540127390,,500
+a47a00,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540127474,d82ba9,200
+d82ba9,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540127474,,500
+ba477a,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540128026,2286a2,200
+2286a2,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540128026,,500

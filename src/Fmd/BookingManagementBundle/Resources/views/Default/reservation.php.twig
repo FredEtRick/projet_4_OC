@@ -4,7 +4,7 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
-        <form method="post" action=" ? " id="formulaire">
+        <form method="post" action="traitement" id="formulaire">
             {% if ancienVisiteur %}
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
                 {% for personne in personnesLieesAuMail %}
@@ -57,14 +57,21 @@
                     <label for="oui"> Nous arriverons après 14h</label><br />
                 <input type="radio" name="demiJournee" value="non" />
                     <label for="non"> Nous arriverons avant 14h</label>
+                <input type="hidden" name="indexDernierePersonne" value="1" id="indexDernierePersonne" />
             </p>
 
 
             <input type="submit" value="Soumettre le formulaire" />
 
         </form>
+
+
+
+
+
         <script type="text/javascript">
             var indexDernierePersonne = 1;
+            var indexDernierePersonneElt = document.getElementById("indexDernierePersonne");
             function supprimerPersonne(indexPersonne)
             {
                 var formulaire = document.getElementById("formulaire");
@@ -81,6 +88,7 @@
             {
                 // incrémentation de l'index de dernière personne
                 ++indexDernierePersonne;
+                indexDernierePersonneElt.setAttribute("value", indexDernierePersonne);
 
                 // variables utiles pour la suite
                 var formulaire = document.getElementById("formulaire");
