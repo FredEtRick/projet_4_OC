@@ -53,3 +53,7 @@ eaeb0f,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540476743,3e64b5,200
 f277c7,::1,GET,http://localhost:8888/app_dev.php/,1540480898,,200
 e395d7,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540480908,,200
 61e62d,::1,POST,http://localhost:8888/app_dev.php/traitement,1540480945,,200
+44a725,::1,GET,http://localhost:8888/app_dev.php/,1540482972,,200
+a98af6,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540482980,,200
+527c36,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540483054,,200
+f40953,::1,POST,http://localhost:8888/app_dev.php/traitement,1540483104,,200
