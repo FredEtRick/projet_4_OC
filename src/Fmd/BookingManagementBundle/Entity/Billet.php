@@ -94,7 +94,7 @@ class Billet
     public function getTarif()
     {
         $tarifJournee = $this->personne->getTarifJournee();
-        if (! $this->journeeEntiere)
+        if ($this->reservation->demiJournee)
             $tarifJournee /= 2;
         return $tarifJournee;
     }

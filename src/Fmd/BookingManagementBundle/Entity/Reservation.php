@@ -43,7 +43,7 @@ class Reservation
     /**
      * @var bool
      *
-     * @ORM\Column(name="demiJournee", type="demiJournee")
+     * @ORM\Column(name="demiJournee", type="boolean")
      */
     private $demiJournee;
     
@@ -66,7 +66,7 @@ class Reservation
         // La date de réservation est celle a laquelle on veut venir, pas la date du jour !!! Doit être renseignée dans le formulaire !
         //$this->dateReservation = new \DateTime();
         
-        $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->billets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

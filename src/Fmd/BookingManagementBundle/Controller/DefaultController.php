@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Fmd\BookingManagementBundle\Entity;
 /*use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;*/
 
@@ -15,9 +16,9 @@ $session->start();*/
 /*$session = new Session(new NativeSessionStorage(), new AttributeBag());
 $session->start();*/
 
-/*use Fmd\PersonneBundle\Entity\Personne;
+use Fmd\PersonneBundle\Entity\Personne;
 use Fmd\BookingManagementBundle\Entity\Reservation;
-use Fmd\BookingManagementBundle\Entity\Billet;*/
+use Fmd\BookingManagementBundle\Entity\Billet;
 
 class DefaultController extends Controller
 {
@@ -81,20 +82,36 @@ class DefaultController extends Controller
         $session = $request->getSession();
         $mail = $session->get('mail');
         $ancienVisiteur = $session->get('ancienVisiteur');
-        $visiteurs = new array();
-        $date = $_POST['dateVisite'];
+        $date = \DateTime::createFromFormat('d/m/Y', $_POST['dateVisite']);
         $demiJournee = $_POST['demiJournee'];
-        $cpt = 1;
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
+        $em = $this->getDoctrine()->getManager();
 
-        // creer la reservation en BDD avec des methodes de reservation repository
+        // creer la reservation en BDD
+        $reservation = new Reservation();
+        $reservation->setMail($mail);
+        $reservation->setDateReservation($date);
+        $reservation->setDemiJournee($demiJournee);
+        $em->persist($reservation);
+        $em->flush();
 
         // ajout des anciens visiteurs conservés
         for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
         {
             if (isset($_POST["idPersonne" . $i]))
             {
-                // créer des billets qui pointent vers la réservation courante et vers l'id de la chaque personne. Aura surement besoin d'une nouvelle méthode du repository de billet
+                // persister billets qui pointent vers la réservation courante et vers l'id de chaque personne.
+                $billet = new Billet();
+                // dans le cas où je transforme dans la classe billet les attributs personne et reservation en int contenant l'id conformémant a la table
+                //$billet->setPersonne($_POST["idPersonne" . $i]);
+                //$billet->setReservation($reservation->getId()); // pas sur que ça marche, je pense pas avoir l'id dans l'objet
+                // dans le cas où doctrine, en voyant des objets en attribut, se charge tout seul de les remplacer par leurs id dans la table
+                $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+                $personne = $repository->find($_POST["idPersonne" . $i]);
+                $billet->setPersonne($personne);
+                $billet->setReservation($reservation);
+                $em->persist($billet);
+                $em->flush();
             }
         }
 
@@ -105,20 +122,28 @@ class DefaultController extends Controller
             if (isset($_POST['prenom' . $i])) // si l'une des caractéristiques d'un visiteur existe c'est que le visiteur existe. Doit faire cette vérification car on peut supprimer des visiteurs donc entre le visiteur 1 et le dernier il y a peut être des trous dans le compte
             {
                 // création personnes
-                $visiteurs[$cpt] = new Personne();
-                $visiteurs[$cpt]->prenom = $_POST['prenom' . $i];
-                $visiteurs[$cpt]->nom = $_POST['nom' . $i];
-                $visiteurs[$cpt]->pays = $_POST['pays' . $i];
-                $visiteurs[$cpt]->dateNaissance = $_POST['dateNaissance' . $i];
-                $visiteurs[$cpt]->reduction = $_POST['reduction' . $i];
+                $visiteur = new Personne();
+                $visiteur->setPrenom($_POST['prenom' . $i]);
+                $visiteur->setNom($_POST['nom' . $i]);
+                $visiteur->setPays($_POST['pays' . $i]);
+                $visiteur->setDateNaissance($_POST['dateNaissance' . $i]);
+                $visiteur->setReduction($_POST['reduction' . $i]);
 
-                // appeler la méthode de personne repository pour mettre la personne dans la BDD (créer ces fonction dans un premier temps bien sur)
+                // persister la personne dans la BDD
+                $em->persist($visiteur);
+                $em->flush();
 
+                // création du billet
+                $billet = new Billet();
+                // suite : pas sur, ça dépend si personne et reservation traités comme objets ou comme int (id)
+                $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+                $personne = $repository->find($_POST["idPersonne" . $i]);
+                $billet->setPersonne($personne);
+                $billet->setReservation($reservation);
 
-                // créer les billet qui font les liens, méthode billet repository
-
-
-                $cpt++;
+                // persister les billet qui font les liens
+                $em->persist($billet);
+                $em->flush();
             }
         }
 

@@ -19,14 +19,4 @@ class PersonneRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
-
-    public function ajouterPersonne(Personne $p)
-    {
-
-    }
-
-    public function creerBillet()
-    {
-        
-    }
 }
