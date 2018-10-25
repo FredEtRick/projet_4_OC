@@ -44,7 +44,7 @@ class DefaultController extends Controller
             $session->set('ancienVisiteur', false);
             $ancienVisiteur = false;
             // echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig');
+            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur));
         }
     }
     
@@ -160,7 +160,9 @@ class DefaultController extends Controller
 
         $em->flush();
 
-        return $this->render('@FmdBookingManagement/Default/traitement.php.twig');
+        $reussi = true;
+
+        return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
         // remarque : vraiment besoin d'afficher quelque chose pour le traitement ? Rediriger vers d'autres actions en fonction du résultat du traitement ? Ou faire un if dans cette action et afficher la suite en fonction ?
     }
 }
