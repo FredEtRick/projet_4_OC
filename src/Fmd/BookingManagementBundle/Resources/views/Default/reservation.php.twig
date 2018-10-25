@@ -5,7 +5,7 @@
     </head>
     <body>
         <form method="post" action="traitement" id="formulaire">
-            {% if ancienVisiteur %}
+            {% if ancienVisiteur is defined %} <!-- gros bug, je comprend pas pourquoi existe pas si = false, devrait pouvoir supprimer "is defined" sans bug -->
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
                 {% for personne in personnesLieesAuMail %}
                     <div id="divPersonne{{ loop.index }}">

@@ -43,7 +43,7 @@ class DefaultController extends Controller
         {
             $session->set('ancienVisiteur', false);
             $ancienVisiteur = false;
-            echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
+            // echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
             return $this->render('@FmdBookingManagement/Default/reservation.php.twig');
         }
     }

@@ -38,3 +38,9 @@ bd47d0,::1,POST,http://localhost:8888/app_dev.php/traitement,1540474278,,500
 f666ee,::1,GET,http://localhost:8888/app_dev.php/traitement,1540474346,1f7405,200
 1f7405,::1,POST,http://localhost:8888/app_dev.php/traitement,1540474346,,500
 063fb8,::1,POST,http://localhost:8888/app_dev.php/traitement,1540475453,,200
+f33c98,::1,GET,http://localhost:8888/app_dev.php/,1540476508,,200
+c8cd09,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540476516,f1f358,200
+f1f358,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476516,,500
+eaeb0f,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540476743,3e64b5,200
+3e64b5,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476743,,500
+334145,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476849,,200
