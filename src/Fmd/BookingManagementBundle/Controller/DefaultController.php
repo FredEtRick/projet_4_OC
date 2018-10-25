@@ -77,6 +77,8 @@ class DefaultController extends Controller
 
     public function traitementAction(Request $request)
     {
+        // print_r($_POST); // debug
+
         // d'abord essayer d'effectuer le paiement, et ensuite, si paiement réussi, faire la suite ?
 
         $session = $request->getSession();
@@ -93,7 +95,6 @@ class DefaultController extends Controller
         $reservation->setDateReservation($date);
         $reservation->setDemiJournee($demiJournee);
         $em->persist($reservation);
-        $em->flush();
 
         // ajout des anciens visiteurs conservés
         for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
@@ -102,16 +103,11 @@ class DefaultController extends Controller
             {
                 // persister billets qui pointent vers la réservation courante et vers l'id de chaque personne.
                 $billet = new Billet();
-                // dans le cas où je transforme dans la classe billet les attributs personne et reservation en int contenant l'id conformémant a la table
-                //$billet->setPersonne($_POST["idPersonne" . $i]);
-                //$billet->setReservation($reservation->getId()); // pas sur que ça marche, je pense pas avoir l'id dans l'objet
-                // dans le cas où doctrine, en voyant des objets en attribut, se charge tout seul de les remplacer par leurs id dans la table
                 $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
                 $personne = $repository->find($_POST["idPersonne" . $i]);
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
                 $em->persist($billet);
-                $em->flush();
             }
         }
 
@@ -126,26 +122,44 @@ class DefaultController extends Controller
                 $visiteur->setPrenom($_POST['prenom' . $i]);
                 $visiteur->setNom($_POST['nom' . $i]);
                 $visiteur->setPays($_POST['pays' . $i]);
-                $visiteur->setDateNaissance($_POST['dateNaissance' . $i]);
-                $visiteur->setReduction($_POST['reduction' . $i]);
+                $dateNaissance = \DateTime::createFromFormat('d/m/Y', $_POST['dateNaissance' . $i]);
+                $visiteur->setDateNaissance($dateNaissance);
+                if (isset($_POST['reduction' . $i])) // si pas checkboxcochée, pas définie
+                    $visiteur->setReduction(1);
+                else
+                    $visiteur->setReduction(0);
+                
+                // NOTE CETTE PERSONNE PEUT DEJA EXISTER DANS UNE AUTRE RESERVATION, TRAITER LE CAS !!!
 
-                // persister la personne dans la BDD
-                $em->persist($visiteur);
-                $em->flush();
+                $visiteurBdd = $repository->findOneBy(array(
+                    'prenom' => $visiteur->getPrenom(),
+                    'nom' => $visiteur->getNom(),
+                    'pays' => $visiteur->getPays(),
+                    'dateNaissance' => $visiteur->getDateNaissance(),
+                    'reduction' => $visiteur->getReduction()
+                ));
+
+                if ($visiteurBdd == null)
+                {
+                    // persister la personne dans la BDD
+                    $em->persist($visiteur);
+                }
 
                 // création du billet
                 $billet = new Billet();
-                // suite : pas sur, ça dépend si personne et reservation traités comme objets ou comme int (id)
                 $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
-                $personne = $repository->find($_POST["idPersonne" . $i]);
-                $billet->setPersonne($personne);
+                if ($visiteurBdd == null)
+                    $billet->setPersonne($visiteur);
+                else
+                    $billet->setPersonne($visiteurBdd);
                 $billet->setReservation($reservation);
 
                 // persister les billet qui font les liens
                 $em->persist($billet);
-                $em->flush();
             }
         }
+
+        $em->flush();
 
         return $this->render('@FmdBookingManagement/Default/traitement.php.twig');
         // remarque : vraiment besoin d'afficher quelque chose pour le traitement ? Rediriger vers d'autres actions en fonction du résultat du traitement ? Ou faire un if dans cette action et afficher la suite en fonction ?

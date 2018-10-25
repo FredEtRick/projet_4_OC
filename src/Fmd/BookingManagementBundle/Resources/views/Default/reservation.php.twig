@@ -133,24 +133,19 @@
 
                 // création du champs de date de naissance
                 var nouveauLabelDate = document.createElement("LABEL");
-                nouveauLabelDate.setAttribute("for", "date" + indexDernierePersonne);
+                nouveauLabelDate.setAttribute("for", "dateNaissance" + indexDernierePersonne);
                 nouveauLabelDate.textContent = "Date de naissance : ";
 
                 var nouveauChampsDate = document.createElement("INPUT");
                 nouveauChampsDate.setAttribute("type", "text");
-                nouveauChampsDate.setAttribute("id", "date" + indexDernierePersonne);
-                nouveauChampsDate.setAttribute("name", "date" + indexDernierePersonne);
+                nouveauChampsDate.setAttribute("id", "dateNaissance" + indexDernierePersonne);
+                nouveauChampsDate.setAttribute("name", "dateNaissance" + indexDernierePersonne);
                 var nouveauBrDate = document.createElement("br");
 
                 // création du champs de reduction
                 var nouveauLabelReduction = document.createElement("LABEL");
                 nouveauLabelReduction.setAttribute("for", "reduction" + indexDernierePersonne);
                 nouveauLabelReduction.textContent = " je possède une réduction ";
-
-                // code suivant bug, mais de toute façon pas très utile, pas besoin d'avoir 10 fois le message
-                /*var nouveauSpanReduction = document.createElement("span");
-                nouveauSpanReduction.textContent("(à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)");
-                nouveauLabelReduction.appendChild(nouveauSpanReduction);*/
 
                 var nouveauChampsReduction = document.createElement("INPUT");
                 nouveauChampsReduction.setAttribute("type", "checkbox");
