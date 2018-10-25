@@ -88,6 +88,7 @@ class DefaultController extends Controller
         $demiJournee = $_POST['demiJournee'];
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
         $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
 
         // creer la reservation en BDD
         $reservation = new Reservation();
@@ -103,7 +104,6 @@ class DefaultController extends Controller
             {
                 // persister billets qui pointent vers la réservation courante et vers l'id de chaque personne.
                 $billet = new Billet();
-                $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
                 $personne = $repository->find($_POST["idPersonne" . $i]);
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
@@ -147,7 +147,6 @@ class DefaultController extends Controller
 
                 // création du billet
                 $billet = new Billet();
-                $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
                 if ($visiteurBdd == null)
                     $billet->setPersonne($visiteur);
                 else

@@ -44,3 +44,6 @@ f1f358,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476516,,500
 eaeb0f,::1,GET,http://localhost:8888/app_dev.php/verifMail,1540476743,3e64b5,200
 3e64b5,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476743,,500
 334145,::1,POST,http://localhost:8888/app_dev.php/verifMail,1540476849,,200
+8fbb60,::1,GET,http://localhost:8888/app_dev.php/traitement,1540477020,69e8c6,200
+69e8c6,::1,POST,http://localhost:8888/app_dev.php/traitement,1540477020,,500
+0328f8,::1,POST,http://localhost:8888/app_dev.php/traitement,1540477266,,200
