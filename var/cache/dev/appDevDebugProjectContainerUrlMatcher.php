@@ -147,6 +147,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::traitementAction',  '_route' => 'fmd_booking_management_traitement',);
         }
 
+        // fmd_booking_management_paiement
+        if ('/paiement' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::paiementAction',  '_route' => 'fmd_booking_management_paiement',);
+        }
+
         // fmd_personne_homepage
         if ('/personne' === $trimmedPathinfo) {
             $ret = array (  '_controller' => 'Fmd\\PersonneBundle\\Controller\\DefaultController::indexAction',  '_route' => 'fmd_personne_homepage',);

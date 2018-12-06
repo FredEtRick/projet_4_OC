@@ -1,12 +1,7 @@
 # This file is auto-generated during the composer install
 parameters:
-#<<<<<<< HEAD
-#    database_host: localhost
-#    database_port: null
-#=======
     database_host: 127.0.0.1
     database_port: 8889
-#>>>>>>> brancheInvolontaire
     database_name: Louvre
     database_user: root
     database_password: root
