@@ -189,7 +189,7 @@ class Personne
     
     public function getTarifJournee()
     {
-        $aujourdhui = new \Datetime();
+        $aujourdhui = new \Datetime(); // note : changer par date visite !!!
         $dateNaissance = $this->getDateNaissance();
         $age = date_format($aujourdhui, 'Y') - date_format($dateNaissance, 'Y');
         if (date_format($aujourdhui, 'm') < date_format($dateNaissance, 'm'))

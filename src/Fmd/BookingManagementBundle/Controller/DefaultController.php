@@ -75,12 +75,70 @@ class DefaultController extends Controller
         }
     }
 
-    /*public function paiementAction(Request $request)
+    public function paiementAction(Request $request)
     {
         $session = $request->getSession();
         $session->set('post', $_POST);
-        return $this->render('@FmdBookingManagement/Default/paiement.php.twig');
-    }*/
+
+        if ($_POST['demiJournee'] == "non")
+            $demiJournee = false;
+        else
+            $demiJournee = true;
+        $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
+        $prix = 0;
+
+        $ancienVisiteur = $session->get('ancienVisiteur');
+        $date = \DateTime::createFromFormat('d/m/Y', $_POST['dateVisite']);
+        $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+
+        // creer la reservation en BDD
+        $reservation = new Reservation();
+        $reservation->setDateReservation($date);
+        $reservation->setDemiJournee($demiJournee);
+
+        // ajout des anciens visiteurs conservés
+        for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
+        {
+            if (isset($_POST["idPersonne" . $i]))
+            {
+                // persister billets qui pointent vers la réservation courante et vers l'id de chaque personne.
+                $billet = new Billet();
+                $personne = $repository->find($_POST["idPersonne" . $i]);
+                $billet->setPersonne($personne);
+                $billet->setReservation($reservation);
+                $prix += $billet->getTarif();
+                echo $billet->getTarif();
+            }
+        }
+
+        // ajout des nouveaux visiteurs
+        $indexDernierePersonne = $_POST['indexDernierePersonne'];
+        for ($i=1 ; $i<=$indexDernierePersonne ; $i++)
+        {
+            if (isset($_POST['prenom' . $i])) // si l'une des caractéristiques d'un visiteur existe c'est que le visiteur existe. Doit faire cette vérification car on peut supprimer des visiteurs donc entre le visiteur 1 et le dernier il y a peut être des trous dans le compte
+            {
+                // création personnes
+                $visiteur = new Personne();
+                $dateNaissance = \DateTime::createFromFormat('d/m/Y', $_POST['dateNaissance' . $i]);
+                $visiteur->setDateNaissance($dateNaissance);
+                if (isset($_POST['reduction' . $i])) // si pas checkboxcochée, pas définie
+                    $visiteur->setReduction(1);
+                else
+                    $visiteur->setReduction(0);
+
+                // création du billet
+                $billet = new Billet();
+                $billet->setPersonne($visiteur);
+                $billet->setReservation($reservation);
+                $prix += $billet->getTarif();
+                echo $billet->getTarif();
+            }
+        }
+
+        return $this->render('@FmdBookingManagement/Default/paiement.php.twig', array('prix' => $prix*100));
+    }
 
     public function traitementAction(Request $request)
     {
@@ -102,12 +160,16 @@ class DefaultController extends Controller
         ]);
 
 
-
         $session = $request->getSession();
+        $POST = $session->get('post');
         $mail = $session->get('mail');
         $ancienVisiteur = $session->get('ancienVisiteur');
-        $date = \DateTime::createFromFormat('d/m/Y', $_POST['dateVisite']);
-        $demiJournee = $_POST['demiJournee'];
+        $date = \DateTime::createFromFormat('d/m/Y', $POST['dateVisite']);
+        $demiJournee = $POST['demiJournee'];
+        if ($_POST['demiJournee'] == "non")
+            $demiJournee = false;
+        else
+            $demiJournee = true;
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
@@ -122,11 +184,11 @@ class DefaultController extends Controller
         // ajout des anciens visiteurs conservés
         for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
         {
-            if (isset($_POST["idPersonne" . $i]))
+            if (isset($POST["idPersonne" . $i]))
             {
                 // persister billets qui pointent vers la réservation courante et vers l'id de chaque personne.
                 $billet = new Billet();
-                $personne = $repository->find($_POST["idPersonne" . $i]);
+                $personne = $repository->find($POST["idPersonne" . $i]);
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
                 $em->persist($billet);
@@ -134,19 +196,19 @@ class DefaultController extends Controller
         }
 
         // ajout des nouveaux visiteurs
-        $indexDernierePersonne = $_POST['indexDernierePersonne'];
+        $indexDernierePersonne = $POST['indexDernierePersonne'];
         for ($i=1 ; $i<=$indexDernierePersonne ; $i++)
         {
-            if (isset($_POST['prenom' . $i])) // si l'une des caractéristiques d'un visiteur existe c'est que le visiteur existe. Doit faire cette vérification car on peut supprimer des visiteurs donc entre le visiteur 1 et le dernier il y a peut être des trous dans le compte
+            if (isset($POST['prenom' . $i])) // si l'une des caractéristiques d'un visiteur existe c'est que le visiteur existe. Doit faire cette vérification car on peut supprimer des visiteurs donc entre le visiteur 1 et le dernier il y a peut être des trous dans le compte
             {
                 // création personnes
                 $visiteur = new Personne();
-                $visiteur->setPrenom($_POST['prenom' . $i]);
-                $visiteur->setNom($_POST['nom' . $i]);
-                $visiteur->setPays($_POST['pays' . $i]);
-                $dateNaissance = \DateTime::createFromFormat('d/m/Y', $_POST['dateNaissance' . $i]);
+                $visiteur->setPrenom($POST['prenom' . $i]);
+                $visiteur->setNom($POST['nom' . $i]);
+                $visiteur->setPays($POST['pays' . $i]);
+                $dateNaissance = \DateTime::createFromFormat('d/m/Y', $POST['dateNaissance' . $i]);
                 $visiteur->setDateNaissance($dateNaissance);
-                if (isset($_POST['reduction' . $i])) // si pas checkboxcochée, pas définie
+                if (isset($POST['reduction' . $i])) // si pas checkboxcochée, pas définie
                     $visiteur->setReduction(1);
                 else
                     $visiteur->setReduction(0);

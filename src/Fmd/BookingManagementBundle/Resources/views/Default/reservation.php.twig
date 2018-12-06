@@ -4,7 +4,7 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
-        <form method="post" action="traitement" id="formulaire">
+        <form method="post" action="paiement" id="formulaire">
             {% if ancienVisiteur %}
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
                 {% for personne in personnesLieesAuMail %}
@@ -309,19 +309,7 @@
             </p>
 
 
-            <!-- <input type="submit" value="Soumettre le formulaire" /> -->
-
-
-            <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="pk_test_gMNp5Q0kTlXgzxVlj6l3B5Ac"
-                data-amount="999"
-                data-name="Demo Site"
-                data-description="Example charge"
-                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                data-locale="auto"
-                data-currency="eur">
-            </script>
+            <input type="submit" value="Soumettre le formulaire" />
         </form>
 
 

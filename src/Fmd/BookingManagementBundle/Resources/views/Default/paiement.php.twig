@@ -4,11 +4,12 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
+        {{prix}}
         <form action="traitement" method="POST">
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="pk_test_gMNp5Q0kTlXgzxVlj6l3B5Ac"
-                data-amount="999"
+                data-amount={{prix}}
                 data-name="Demo Site"
                 data-description="Example charge"
                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
