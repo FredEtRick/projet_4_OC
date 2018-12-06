@@ -72,3 +72,9 @@ b0dd6d,::1,POST,http://localhost:8888/app_dev.php/paiement,1544091122,,200
 be2d5b,::1,POST,http://localhost:8888/app_dev.php/paiement,1544091521,,200
 f7f0ab,::1,POST,http://localhost:8888/app_dev.php/choix,1544091552,,200
 d6ec54,::1,POST,http://localhost:8888/app_dev.php/paiement,1544091569,,200
+fe5876,::1,POST,http://localhost:8888/app_dev.php/choix,1544092294,,200
+7b6f0f,::1,GET,http://localhost:8888/app_dev.php/paiement,1544092302,666f61,200
+666f61,::1,POST,http://localhost:8888/app_dev.php/paiement,1544092302,,500
+178b50,::1,POST,http://localhost:8888/app_dev.php/choix,1544092391,,200
+db6208,::1,POST,http://localhost:8888/app_dev.php/paiement,1544092400,,200
+8370b6,::1,POST,http://localhost:8888/app_dev.php/paiement,1544092405,,200

@@ -93,9 +93,28 @@ class Billet
     
     public function getTarif()
     {
-        $tarifJournee = $this->personne->getTarifJournee();
+        $tarif = 0;
+        $dateReservation = $this->reservation->getDateReservation();
+        $dateNaissance = $this->personne->getDateNaissance();
+        $age = date_format($dateReservation, 'Y') - date_format($dateNaissance, 'Y');
+        if (date_format($dateReservation, 'm') < date_format($dateNaissance, 'm'))
+            $age--;
+        elseif(date_format($dateReservation, 'm') == date_format($dateNaissance, 'm') && date_format($dateReservation, 'd') < date_format($dateNaissance, 'd'))
+            $age--;
+        
+        if ($age < 4)
+            $tarif = 0;
+        elseif ($age < 12)
+            $tarif = 8;
+        elseif ($this->personne->getReduction())
+            $tarif = 10;
+        elseif ($age >= 60)
+            $tarif = 12;
+        else
+            $tarif = 16;
+
         if ($this->reservation->getDemiJournee())
-            $tarifJournee /= 2;
-        return $tarifJournee;
+            $tarif /= 2;
+        return $tarif;
     }
 }

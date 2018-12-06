@@ -187,7 +187,7 @@ class Personne
         return $this->reduction;
     }
     
-    public function getTarifJournee()
+    /*public function getTarifJournee()
     {
         $aujourdhui = new \Datetime(); // note : changer par date visite !!!
         $dateNaissance = $this->getDateNaissance();
@@ -206,12 +206,12 @@ class Personne
         if ($age >= 60)
             return 12;
         return 16;
-    }
+    }*/
     
-    public function getTarifDemiJournee()
+    /*public function getTarifDemiJournee()
     {
         return $this->getTarifJournee() / 2;
-    }
+    }*/
 
     public function getDateNaissanceString()
     {
