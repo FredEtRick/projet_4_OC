@@ -137,6 +137,8 @@ class DefaultController extends Controller
             }
         }
 
+        $session->set('prix', $prix);
+
         return $this->render('@FmdBookingManagement/Default/paiement.php.twig', array('prix' => $prix*100));
     }
 
@@ -152,21 +154,23 @@ class DefaultController extends Controller
         // Get the payment token ID submitted by the form:
         $token = $_POST['stripeToken'];
 
+        $session = $request->getSession();
+        $prix = $session->get('prix');
+
         $charge = \Stripe\Charge::create([
-            'amount' => 999,
-            'currency' => 'usd',
+            'amount' => $prix*100,
+            'currency' => 'eur',
             'description' => 'Example charge',
             'source' => $token,
         ]);
 
 
-        $session = $request->getSession();
         $POST = $session->get('post');
         $mail = $session->get('mail');
         $ancienVisiteur = $session->get('ancienVisiteur');
         $date = \DateTime::createFromFormat('d/m/Y', $POST['dateVisite']);
         $demiJournee = $POST['demiJournee'];
-        if ($_POST['demiJournee'] == "non")
+        if ($POST['demiJournee'] == "non")
             $demiJournee = false;
         else
             $demiJournee = true;

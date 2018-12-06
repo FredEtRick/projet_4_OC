@@ -78,3 +78,16 @@ fe5876,::1,POST,http://localhost:8888/app_dev.php/choix,1544092294,,200
 178b50,::1,POST,http://localhost:8888/app_dev.php/choix,1544092391,,200
 db6208,::1,POST,http://localhost:8888/app_dev.php/paiement,1544092400,,200
 8370b6,::1,POST,http://localhost:8888/app_dev.php/paiement,1544092405,,200
+47e806,::1,POST,http://localhost:8888/app_dev.php/choix,1544097887,,200
+989e87,::1,POST,http://localhost:8888/app_dev.php/paiement,1544097897,,200
+9674bb,::1,GET,http://localhost:8888/app_dev.php/traitement,1544097924,5ef055,200
+5ef055,::1,POST,http://localhost:8888/app_dev.php/traitement,1544097924,,500
+280d0d,::1,GET,http://localhost:8888/app_dev.php/traitement,1544097991,a6a1b0,200
+a6a1b0,::1,POST,http://localhost:8888/app_dev.php/traitement,1544097991,,500
+32bc04,::1,GET,http://localhost:8888/app_dev.php/traitement,1544098063,33178f,200
+33178f,::1,POST,http://localhost:8888/app_dev.php/traitement,1544098063,,500
+f3948c,::1,GET,http://localhost:8888/app_dev.php/,1544098102,,200
+6ad386,::1,POST,http://localhost:8888/app_dev.php/verifMail,1544098111,,200
+a4cba3,::1,POST,http://localhost:8888/app_dev.php/choix,1544098114,,200
+d1484a,::1,POST,http://localhost:8888/app_dev.php/paiement,1544098124,,200
+94875b,::1,POST,http://localhost:8888/app_dev.php/traitement,1544098147,,200
