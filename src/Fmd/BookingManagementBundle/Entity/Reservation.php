@@ -24,6 +24,13 @@ class Reservation
     /**
      * @var string
      *
+     * @ORM\Column(name="aleatoire", type="string", length=255)
+     */
+    private $aleatoire;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="mail", type="string", length=255)
      */
     private $mail;
@@ -67,6 +74,10 @@ class Reservation
         //$this->dateReservation = new \DateTime();
         
         //$this->billets = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
+        $melange = substr(str_shuffle($caracteres), 0, 12);
+        $this->aleatoire = $melange;
     }
 
     /**
@@ -77,6 +88,30 @@ class Reservation
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set aleatoire
+     *
+     * @param string $aleatoire
+     *
+     * @return Reservation
+     */
+    public function setAleatoire($aleatoire)
+    {
+        $this->aleatoire = $aleatoire;
+
+        return $this;
+    }
+
+    /**
+     * Get aleatoire
+     *
+     * @return string
+     */
+    public function getAleatoire()
+    {
+        return $this->aleatoire;
     }
 
     /**
@@ -181,7 +216,7 @@ class Reservation
 
     public function getDateReservationString()
     {
-        return $this->dateReservation->format('d/m/Y H:i:s');
+        return $this->dateReservation->format('d/m/Y' /* H:i:s*/);
     }
 
     /**

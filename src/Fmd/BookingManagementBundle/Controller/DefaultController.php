@@ -167,6 +167,7 @@ class DefaultController extends Controller
 
         $POST = $session->get('post');
         $mail = $session->get('mail');
+        $sujetMail = 'Votre réservation pour le musée du Louvre';
         $ancienVisiteur = $session->get('ancienVisiteur');
         $date = \DateTime::createFromFormat('d/m/Y', $POST['dateVisite']);
         $demiJournee = $POST['demiJournee'];
@@ -177,6 +178,15 @@ class DefaultController extends Controller
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+        //if (preg_match("#^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}#", $mail))
+        if (preg_match("#(hotmail|live|msn)\.[a-zA-Z]{2,6}$#", $mail))
+            $sautLigne = "\r\n";
+        else
+            $sautLigne = "\n";
+        
+        $messageMail = '';
+        $messageHtml = '<html><head><title>musée du Louvre</title></head><body>';
+        $messageTexte = '';
 
         // creer la reservation en BDD
         $reservation = new Reservation();
@@ -184,6 +194,26 @@ class DefaultController extends Controller
         $reservation->setDateReservation($date);
         $reservation->setDemiJournee($demiJournee);
         $em->persist($reservation);
+
+        echo '<p>' . $_SERVER['PHP_SELF'] . '</p>';
+
+        $messageHtml .= '<p>Musée du Louvre.<br /><img src="cid:images/musee.jpg" alt="louvre" /></p>';
+        $messageHtml .= '<p>Billet pour une visite le ';
+        $messageHtml .= $reservation->getDateReservationString();
+        if ($demiJournee)
+            $messageHtml .= ' après 14h.';
+        else
+            $messageHtml .= ', heure d\'arrivée libre.';
+        $messageHtml .= '</p><p>Personnes attendues :<br />';
+
+        $messageTexte .= 'Musée du Louvre.' . $sautLigne;
+        $messageTexte .= 'Billet pour une visite le ';
+        $messageTexte .= $reservation->getDateReservationString();
+        if ($demiJournee)
+            $messageTexte .= ' après 14h.';
+        else
+            $messageTexte .= ', heure d\'arrivée libre.';
+        $messageTexte .= $sautLigne . $sautLigne . 'Personnes attendues :' . $sautLigne;
 
         // ajout des anciens visiteurs conservés
         for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
@@ -196,6 +226,9 @@ class DefaultController extends Controller
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
                 $em->persist($billet);
+                $ajoutMessage = $personne->getPrenom() . ' ' . $personne->getNom() . ', né le ' . $personne->getDateNaissanceString() . ', réduction : ' . $personne->getReduction();
+                $messageHtml .= $ajoutMessage . '<br />';
+                $messageTexte .= $ajoutMessage . $sautLigne;
             }
         }
 
@@ -216,6 +249,10 @@ class DefaultController extends Controller
                     $visiteur->setReduction(1);
                 else
                     $visiteur->setReduction(0);
+
+                $ajoutMessage = $visiteur->getPrenom() . ' ' . $visiteur->getNom() . ', né le ' . $visiteur->getDateNaissanceString() . ', réduction : ' . $visiteur->getReduction();
+                $messageHtml .= $ajoutMessage . '<br />';
+                $messageTexte .= $ajoutMessage . $sautLigne;
                 
                 // NOTE CETTE PERSONNE PEUT DEJA EXISTER DANS UNE AUTRE RESERVATION, TRAITER LE CAS !!!
 
@@ -246,9 +283,70 @@ class DefaultController extends Controller
             }
         }
 
-        $em->flush();
+        $messageHtml .= '</p><p>Tarif : ' . $prix . '€.<br />';
+        $messageHtml .= 'code de réservation : ' . $reservation->getId() . '*' . $reservation->getAleatoire() . '</p>';
+
+        $messageHtml .= '<p>Cet e-mail fait office de billet. Vous pouvez l\'imprimerou le montrer sur votre smartphone ou tablette.</p></body></html>';
+
+        $messageTexte .= $sautLigne . 'Tarif : ' . $prix . '€.' . $sautLigne;
+        $messageTexte .= 'code de réservation : ' . $reservation->getId() . '*' . $reservation->getAleatoire() . $sautLigne . $sautLigne;
+
+        $messageTexte .= 'Cet e-mail fait office de billet. Vous pouvez l\'imprimerou le montrer sur votre smartphone ou tablette.';
+
+
+
+        $headers[] = 'From: "travail"<travail@MacBook-Pro-de-frederic.local>';
+        $headers[] = 'Reply-to: "frederic malard"<fred.malard@gmx.fr>';
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-Type: multiple/alternative';
+        $boundary = '-----=' . md5(rand());
+        $headers[] = 'boundary=' . $boundary;
+
+        $messageMail .= $sautLigne . '--' . $boundary . $sautLigne;
+        $messageMail .= 'Content-Type: text/html; charset="iso-8859-1"' . $sautLigne;
+        $messageMail .= 'Content-transer-encoging: 8bit' . $sautLigne;
+        $messageMail .= $messageHtml . $sautLigne;
+
+        $messageMail .= $sautLigne . '--' . $boundary . $sautLigne;
+        $messageMail .= 'Content-Type: text/plain; charset="iso-8859-1"' . $sautLigne;
+        $messageMail .= 'Content-transfer-encoding: 8bit' . $sautLigne;
+        $messageMail .= $messageTexte . $sautLigne;
+        $messageMail .= $sautLigne . '--' . $boundary . $sautLigne;
+        $messageMail .= $sautLigne . '--' . $boundary . $sautLigne;
+
+        mail($destinataire, $sujet, $message, implode($sautLigne, $headers));
+
+
+
+
+        /*$headers[] = 'MIME-Version: 1.0';
+        //$headers[] = 'Content-type: text/html; charset=utf-8';
+        //$headers[] = "Content-Type: multipart/alternative; charset=utf-8"
+        $headers[] = 'Content-type:text/html; charset="ISO-8895-1"';
+        $headers[] = 'Content-transfer-Encoding : 8bit';
+        // $headers[] = "boundary=\"$boundary\""; je sais même pas ce que c'est $boundary, c'est même pas déclaré !!!
+
+        $headers[] = 'To: ' . $mail;
+        $headers[] = 'From: \"travail\"<travail@MacBook-Pro-de-frederic.local>';
+        $headers[] = "Reply-to: \"fred\"<fred.mgm2@gmail.com>"
+        /*$headers[] = 'Cc: anniversaire_archive@example.com';
+        $headers[] = 'Bcc: anniversaire_verif@example.com';*/
+
+        /*$headers[] = "Content-Type: application/octet-stream;name=\"logo_lm.jpg\"";
+        $headers .="Content-Transfer-Encoding: base64";
+        $headers .="Content-Disposition = attachment; filename=logo_lm.jpg";*/
+
+
+
+
 
         $reussi = ($charge->status == "succeeded");
+
+        if ($reussi)
+        {
+            $em->flush();
+            var_dump(mail ($mail, $sujetMail, $messageMail, implode ("\n", $headers)));
+        }
 
         return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
     }

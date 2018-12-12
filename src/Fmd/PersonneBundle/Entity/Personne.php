@@ -215,7 +215,7 @@ class Personne
 
     public function getDateNaissanceString()
     {
-        return $this->dateNaissance->format('d/m/Y H:i:s');
+        return $this->dateNaissance->format('d/m/Y'/* H:i:s*/);
     }
 }
 
