@@ -12,8 +12,9 @@
 namespace Symfony\Component\Security\Http\Firewall;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface;
@@ -21,12 +22,11 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * ContextListener manages the SecurityContext persistence through a session.
@@ -97,7 +97,7 @@ class ContextListener implements ListenerInterface
         if (null !== $this->logger) {
             $this->logger->debug('Read existing security token from the session.', array(
                 'key' => $this->sessionKey,
-                'token_class' => is_object($token) ? get_class($token) : null,
+                'token_class' => \is_object($token) ? \get_class($token) : null,
             ));
         }
 
@@ -161,31 +161,37 @@ class ContextListener implements ListenerInterface
         }
 
         $userNotFoundByProvider = false;
+        $userDeauthenticated = false;
 
         foreach ($this->userProviders as $provider) {
             if (!$provider instanceof UserProviderInterface) {
-                throw new \InvalidArgumentException(sprintf('User provider "%s" must implement "%s".', get_class($provider), UserProviderInterface::class));
+                throw new \InvalidArgumentException(sprintf('User provider "%s" must implement "%s".', \get_class($provider), UserProviderInterface::class));
             }
 
             try {
                 $refreshedUser = $provider->refreshUser($user);
-                $token->setUser($refreshedUser);
+                $newToken = unserialize(serialize($token));
+                $newToken->setUser($refreshedUser);
 
                 // tokens can be deauthenticated if the user has been changed.
-                if (!$token->isAuthenticated()) {
+                if (!$newToken->isAuthenticated()) {
                     if ($this->logoutOnUserChange) {
+                        $userDeauthenticated = true;
+
                         if (null !== $this->logger) {
-                            $this->logger->debug('Token was deauthenticated after trying to refresh it.', array('username' => $refreshedUser->getUsername(), 'provider' => get_class($provider)));
+                            $this->logger->debug('Cannot refresh token because user has changed.', array('username' => $refreshedUser->getUsername(), 'provider' => \get_class($provider)));
                         }
 
-                        return null;
+                        continue;
                     }
 
                     @trigger_error('Refreshing a deauthenticated user is deprecated as of 3.4 and will trigger a logout in 4.0.', E_USER_DEPRECATED);
                 }
 
+                $token->setUser($refreshedUser);
+
                 if (null !== $this->logger) {
-                    $context = array('provider' => get_class($provider), 'username' => $refreshedUser->getUsername());
+                    $context = array('provider' => \get_class($provider), 'username' => $refreshedUser->getUsername());
 
                     foreach ($token->getRoles() as $role) {
                         if ($role instanceof SwitchUserRole) {
@@ -202,18 +208,26 @@ class ContextListener implements ListenerInterface
                 // let's try the next user provider
             } catch (UsernameNotFoundException $e) {
                 if (null !== $this->logger) {
-                    $this->logger->warning('Username could not be found in the selected user provider.', array('username' => $e->getUsername(), 'provider' => get_class($provider)));
+                    $this->logger->warning('Username could not be found in the selected user provider.', array('username' => $e->getUsername(), 'provider' => \get_class($provider)));
                 }
 
                 $userNotFoundByProvider = true;
             }
         }
 
+        if ($userDeauthenticated) {
+            if (null !== $this->logger) {
+                $this->logger->debug('Token was deauthenticated after trying to refresh it.');
+            }
+
+            return null;
+        }
+
         if ($userNotFoundByProvider) {
             return null;
         }
 
-        throw new \RuntimeException(sprintf('There is no user provider for user "%s".', get_class($user)));
+        throw new \RuntimeException(sprintf('There is no user provider for user "%s".', \get_class($user)));
     }
 
     private function safelyUnserialize($serializedToken)

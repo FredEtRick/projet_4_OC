@@ -5,8 +5,8 @@ parameters:
     database_name: Louvre
     database_user: root
     database_password: root
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: testsDivers2@gmail.com
+    mailer_password: tests@492251819
     secret: 8fbe2991d6a8ad1af778d70481db249f6d2a09cc

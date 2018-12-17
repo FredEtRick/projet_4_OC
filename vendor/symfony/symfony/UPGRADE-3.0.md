@@ -595,6 +595,24 @@ UPGRADE FROM 2.x to 3.0
       }
    }
    ```
+   
+   If the form is submitted with a different request method than `POST`, you need to configure this in the form:
+
+   Before:
+
+   ```php
+   $form = $this->createForm(FormType::class, $entity);
+   $form->submit($request);
+   ```
+
+   After:
+
+   ```php
+   $form = $this->createForm(FormType::class, $entity, [
+       'method' => 'PUT',
+   ]);
+   $form->handleRequest($request);
+   ```
 
  * The events `PRE_BIND`, `BIND` and `POST_BIND` were renamed to `PRE_SUBMIT`, `SUBMIT`
    and `POST_SUBMIT`.
@@ -663,7 +681,7 @@ UPGRADE FROM 2.x to 3.0
    As a value for the option you must provide the fully-qualified class name (FQCN)
    now as well.
 
- * The `FormIntegrationTestCase` and `FormPerformanceTestCase` classes were moved form the `Symfony\Component\Form\Tests` namespace to the `Symfony\Component\Form\Test` namespace.
+ * The `FormIntegrationTestCase` and `FormPerformanceTestCase` classes were moved from the `Symfony\Component\Form\Tests` namespace to the `Symfony\Component\Form\Test` namespace.
 
  * The constants `ROUND_HALFEVEN`, `ROUND_HALFUP` and `ROUND_HALFDOWN` in class
    `NumberToLocalizedStringTransformer` were renamed to `ROUND_HALF_EVEN`,
@@ -863,6 +881,34 @@ UPGRADE FROM 2.x to 3.0
    framework:
        templating:
            engines: ['php']
+   ```
+
+ * The assets settings under `framework.templating` were moved to `framework.assets`.
+
+   Before:
+
+   ```yml
+   framework:
+       templating:
+           assets_version: 'v123'
+           assets_version_format: '%%s?version=%%s'
+           assets_base_urls:
+               http: ['http://cdn.example.com']
+               ssl:  ['https://secure.example.com']
+           packages:
+               # ...
+   ```
+
+   After:
+
+   ```yml
+   framework:
+       assets:
+           version: 'v123'
+           version_format: '%%s?version=%%s'
+           base_urls: ['http://cdn.example.com', 'https://secure.example.com']
+           packages:
+               # ...
    ```
 
  * The `form.csrf_provider` service is removed as it implements an adapter for

@@ -4,6 +4,9 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
+        <p>
+            <img src="{{ asset('images/musee.jpg') }}" alt="image" />
+        </p>
         <form method="post" action="paiement" id="formulaire">
             {% if ancienVisiteur %}
                 <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>

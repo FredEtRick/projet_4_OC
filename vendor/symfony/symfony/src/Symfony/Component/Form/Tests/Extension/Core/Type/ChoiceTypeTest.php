@@ -112,7 +112,7 @@ class ChoiceTypeTest extends BaseTypeTest
             'choices' => $this->choices,
         ));
 
-        $this->assertCount(count($this->choices), $form, 'Each choice should become a new field');
+        $this->assertCount(\count($this->choices), $form, 'Each choice should become a new field');
     }
 
     public function testChoiceListWithScalarValues()
@@ -197,7 +197,7 @@ class ChoiceTypeTest extends BaseTypeTest
         ));
 
         $this->assertArrayHasKey('placeholder', $form);
-        $this->assertCount(count($this->choices) + 1, $form, 'Each choice should become a new field');
+        $this->assertCount(\count($this->choices) + 1, $form, 'Each choice should become a new field');
     }
 
     public function testPlaceholderNotPresentIfRequired()
@@ -210,7 +210,7 @@ class ChoiceTypeTest extends BaseTypeTest
         ));
 
         $this->assertArrayNotHasKey('placeholder', $form);
-        $this->assertCount(count($this->choices), $form, 'Each choice should become a new field');
+        $this->assertCount(\count($this->choices), $form, 'Each choice should become a new field');
     }
 
     public function testPlaceholderNotPresentIfMultiple()
@@ -223,7 +223,7 @@ class ChoiceTypeTest extends BaseTypeTest
         ));
 
         $this->assertArrayNotHasKey('placeholder', $form);
-        $this->assertCount(count($this->choices), $form, 'Each choice should become a new field');
+        $this->assertCount(\count($this->choices), $form, 'Each choice should become a new field');
     }
 
     public function testPlaceholderNotPresentIfEmptyChoice()
@@ -584,18 +584,19 @@ class ChoiceTypeTest extends BaseTypeTest
         $this->assertTrue($form->isSynchronized());
     }
 
-    public function testSubmitSingleChoiceWithEmptyData()
+    public function testSubmitNullUsesDefaultEmptyData($emptyData = 'empty', $expectedData = null)
     {
         $form = $this->factory->create(static::TESTED_TYPE, null, array(
             'multiple' => false,
             'expanded' => false,
-            'choices' => array('test'),
-            'empty_data' => 'test',
+            // empty data must match string choice value
+            'choices' => array($emptyData),
+            'empty_data' => $emptyData,
         ));
 
         $form->submit(null);
 
-        $this->assertSame('test', $form->getData());
+        $this->assertSame($emptyData, $form->getData());
     }
 
     public function testSubmitSingleChoiceWithEmptyDataAndInitialData()

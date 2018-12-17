@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\Form\Extension\Core\Type;
 
+use Symfony\Component\Form\Exception\LogicException;
+use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
+use Symfony\Component\Form\Extension\Core\EventListener\TrimListener;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\Extension\Core\EventListener\TrimListener;
-use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
-use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -122,7 +122,7 @@ class FormType extends BaseType
 
         // Derive "data_class" option from passed "data" object
         $dataClass = function (Options $options) {
-            return isset($options['data']) && is_object($options['data']) ? get_class($options['data']) : null;
+            return isset($options['data']) && \is_object($options['data']) ? \get_class($options['data']) : null;
         };
 
         // Derive "empty_data" closure from "data_class" option
@@ -178,6 +178,7 @@ class FormType extends BaseType
             'attr' => array(),
             'post_max_size_message' => 'The uploaded file was too large. Please try to upload a smaller file.',
             'upload_max_size_message' => $uploadMaxSizeMessage, // internal
+            'allow_file_upload' => false,
         ));
 
         $resolver->setAllowedTypes('label_attr', 'array');

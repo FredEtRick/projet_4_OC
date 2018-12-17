@@ -36,7 +36,7 @@ class FileType extends AbstractType
                 $data = array();
                 $files = $event->getData();
 
-                if (!is_array($files)) {
+                if (!\is_array($files)) {
                     $files = array();
                 }
 
@@ -105,6 +105,7 @@ class FileType extends AbstractType
             'data_class' => $dataClass,
             'empty_data' => $emptyData,
             'multiple' => false,
+            'allow_file_upload' => true,
         ));
     }
 

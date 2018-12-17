@@ -20,6 +20,10 @@ use Fmd\PersonneBundle\Entity\Personne;
 use Fmd\BookingManagementBundle\Entity\Reservation;
 use Fmd\BookingManagementBundle\Entity\Billet;
 
+//require_once '/path/to/vendor/autoload.php';
+
+require_once __DIR__.'/../../../../vendor/autoload.php';
+
 class DefaultController extends Controller
 {
     public function indexAction()
@@ -183,10 +187,12 @@ class DefaultController extends Controller
             $sautLigne = "\r\n";
         else
             $sautLigne = "\n";
+        $personnesPourMail = array();
+        //$cheminImage = __DIR__.'"/../../../../web/images/musee.jpg"';
         
-        $messageMail = '';
+        /*$messageMail = '';
         $messageHtml = '<html><head><title>musée du Louvre</title></head><body>';
-        $messageTexte = '';
+        $messageTexte = '';*/
 
         // creer la reservation en BDD
         $reservation = new Reservation();
@@ -197,10 +203,10 @@ class DefaultController extends Controller
 
         echo '<p>' . $_SERVER['PHP_SELF'] . '</p>';
 
-        $messageHtml .= '<p>Musée du Louvre.<br /><img src="cid:images/musee.jpg" alt="louvre" /></p>';
-        $messageHtml .= '<p>Billet pour une visite le ';
-        $messageHtml .= $reservation->getDateReservationString();
-        if ($demiJournee)
+        /*$messageHtml .= '<p>Musée du Louvre.<br /><img src="cid:images/musee.jpg" alt="louvre" /></p>';
+        $messageHtml .= '<p>Billet pour une visite le ';*/
+        $dateReservationString = $reservation->getDateReservationString();
+        /*if ($demiJournee)
             $messageHtml .= ' après 14h.';
         else
             $messageHtml .= ', heure d\'arrivée libre.';
@@ -213,7 +219,7 @@ class DefaultController extends Controller
             $messageTexte .= ' après 14h.';
         else
             $messageTexte .= ', heure d\'arrivée libre.';
-        $messageTexte .= $sautLigne . $sautLigne . 'Personnes attendues :' . $sautLigne;
+        $messageTexte .= $sautLigne . $sautLigne . 'Personnes attendues :' . $sautLigne;*/
 
         // ajout des anciens visiteurs conservés
         for ($i=1 ; $i <= $nombrePersonnesLieesAuMail ; $i++)
@@ -226,9 +232,13 @@ class DefaultController extends Controller
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
                 $em->persist($billet);
-                $ajoutMessage = $personne->getPrenom() . ' ' . $personne->getNom() . ', né le ' . $personne->getDateNaissanceString() . ', réduction : ' . $personne->getReduction();
-                $messageHtml .= $ajoutMessage . '<br />';
-                $messageTexte .= $ajoutMessage . $sautLigne;
+                if ($personne->getReduction())
+                    $reductionString = 'oui';
+                else
+                    $reductionString = 'non';
+                $personnesPourMail[] = $personne->getPrenom() . ' ' . $personne->getNom() . ', né le ' . $personne->getDateNaissanceString() . ', réduction : ' . $reductionString;
+                /*$messageHtml .= $ajoutMessage . '<br />';
+                $messageTexte .= $ajoutMessage . $sautLigne;*/
             }
         }
 
@@ -246,13 +256,19 @@ class DefaultController extends Controller
                 $dateNaissance = \DateTime::createFromFormat('d/m/Y', $POST['dateNaissance' . $i]);
                 $visiteur->setDateNaissance($dateNaissance);
                 if (isset($POST['reduction' . $i])) // si pas checkboxcochée, pas définie
+                {
                     $visiteur->setReduction(1);
+                    $reductionString = 'oui';
+                }
                 else
+                {
                     $visiteur->setReduction(0);
+                    $reductionString = 'non';
+                }
 
-                $ajoutMessage = $visiteur->getPrenom() . ' ' . $visiteur->getNom() . ', né le ' . $visiteur->getDateNaissanceString() . ', réduction : ' . $visiteur->getReduction();
-                $messageHtml .= $ajoutMessage . '<br />';
-                $messageTexte .= $ajoutMessage . $sautLigne;
+                $personnesPourMail[] = $visiteur->getPrenom() . ' ' . $visiteur->getNom() . ', né le ' . $visiteur->getDateNaissanceString() . ', réduction : ' . $reductionString;
+                /*$messageHtml .= $ajoutMessage . '<br />';
+                $messageTexte .= $ajoutMessage . $sautLigne;*/
                 
                 // NOTE CETTE PERSONNE PEUT DEJA EXISTER DANS UNE AUTRE RESERVATION, TRAITER LE CAS !!!
 
@@ -283,7 +299,7 @@ class DefaultController extends Controller
             }
         }
 
-        $messageHtml .= '</p><p>Tarif : ' . $prix . '€.<br />';
+        /*$messageHtml .= '</p><p>Tarif : ' . $prix . '€.<br />';
         $messageHtml .= 'code de réservation : ' . $reservation->getId() . '*' . $reservation->getAleatoire() . '</p>';
 
         $messageHtml .= '<p>Cet e-mail fait office de billet. Vous pouvez l\'imprimerou le montrer sur votre smartphone ou tablette.</p></body></html>';
@@ -337,6 +353,17 @@ class DefaultController extends Controller
         $headers .="Content-Disposition = attachment; filename=logo_lm.jpg";*/
 
 
+        $codeReservation = $reservation->getId() . '*' . $reservation->getAleatoire();
+
+        $mailFinal = (new \Swift_Message($sujetMail))
+            ->setFrom('travail@MacBook-Pro-de-frederic.local')
+            ->setTo($mail)
+            ->setCharset('UTF-8')
+            ->setBody($this->renderView('@FmdBookingManagement/Default/mail.php.twig', array('dateReservationString' => $dateReservationString, 'demiJournee' => $demiJournee, 'personnesPourMail' => $personnesPourMail, 'prix' => $prix, 'codeReservation' => $codeReservation)), 'text/html');
+
+        $this->get('mailer')->send($mailFinal);
+
+
 
 
 
@@ -345,7 +372,7 @@ class DefaultController extends Controller
         if ($reussi)
         {
             $em->flush();
-            var_dump(mail ($mail, $sujetMail, $messageMail, implode ("\n", $headers)));
+            //var_dump(mail ($mail, $sujetMail, $messageMail, implode ("\n", $headers)));
         }
 
         return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
