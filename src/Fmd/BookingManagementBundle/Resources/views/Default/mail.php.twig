@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>musée du louvre - site de réservation</title>
+    </head>
+    <body>
+        <p>
+            Musée du Louvre.<br />
+            <img src="http://localhost:8888{{ asset('images/musee.jpg') }}" alt="louvre" />
+        </p>
+        <p>
+            Billet pour une visite le {{dateReservationString}}
+            {% if demiJournee %}
+                après 14h.
+            {% else %}
+                , heure d'arrivée libre.
+            {% endif %}
+        </p>
+        <p>
+            Personnes attendues :<br />
+            {% for personne in personnesPourMail %}
+                {{ personne }}<br />
+            {% endfor %}
+        </p>
+        <p>
+            Tarif : {{ prix }}€.<br />
+            code de réservation : {{ codeReservation }}
+        </p>
+        <p>
+            Cet e-mail fait office de billet. Vous pouvez l'imprimer ou le montrer sur votre smartphone ou tablette.
+        </p>
+    </body>
+</html>';
