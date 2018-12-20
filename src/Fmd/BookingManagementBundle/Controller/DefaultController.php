@@ -353,17 +353,6 @@ class DefaultController extends Controller
         $headers .="Content-Disposition = attachment; filename=logo_lm.jpg";*/
 
 
-        $codeReservation = $reservation->getId() . '*' . $reservation->getAleatoire();
-
-        $mailFinal = (new \Swift_Message($sujetMail))
-            ->setFrom('travail@MacBook-Pro-de-frederic.local')
-            ->setTo($mail)
-            ->setCharset('UTF-8')
-            ->setBody($this->renderView('@FmdBookingManagement/Default/mail.php.twig', array('dateReservationString' => $dateReservationString, 'demiJournee' => $demiJournee, 'personnesPourMail' => $personnesPourMail, 'prix' => $prix, 'codeReservation' => $codeReservation)), 'text/html');
-
-        $this->get('mailer')->send($mailFinal);
-
-
 
 
 
@@ -372,7 +361,18 @@ class DefaultController extends Controller
         if ($reussi)
         {
             $em->flush();
+            $em->refresh($reservation); // pour récupérer l'id
             //var_dump(mail ($mail, $sujetMail, $messageMail, implode ("\n", $headers)));
+
+            $codeReservation = $reservation->getId() . '*' . $reservation->getAleatoire();
+
+            $mailFinal = (new \Swift_Message($sujetMail))
+                ->setFrom('travail@MacBook-Pro-de-frederic.local')
+                ->setTo($mail)
+                ->setCharset('UTF-8')
+                ->setBody($this->renderView('@FmdBookingManagement/Default/mail.php.twig', array('dateReservationString' => $dateReservationString, 'demiJournee' => $demiJournee, 'personnesPourMail' => $personnesPourMail, 'prix' => $prix, 'codeReservation' => $codeReservation)), 'text/html');
+
+            $this->get('mailer')->send($mailFinal);
         }
 
         return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
