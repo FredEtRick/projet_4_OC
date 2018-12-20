@@ -5,10 +5,14 @@
 {% block body %}
         <p>Les reservations faites avec le mail {{ mail }} :</p>
         {% for reservation in reservationsLieesAuMail %}
-            <div id="divReservation{{ loop.index }}">
+            </section>
+            <section id="divReservation{{ loop.index }}" class="encadre">
                 <input type="hidden" id="idReservation{{ loop.index }}" name="idReservation{{ loop.index }}" value="{{ reservation.id }}" />
                 <p>
-                    Réservation pour une visite le {{ reservation.getDateReservationString() }}, {% if reservation.demiJournee %}arrivée prévue après 14h,{% else %}arrivée à heure libre,{% endif %} personnes attendues :
+                    Réservation pour une visite le {{ reservation.getDateReservationString() }}, {% if reservation.demiJournee %}arrivée prévue après 14h{% else %}arrivée à heure libre{% endif %}.
+                </p>
+                <p>
+                    Personnes attendues :
                 </p>
                 {% for billet in reservation.billets %}
                     <p>
@@ -19,6 +23,5 @@
                         Réduction : {% if billet.personne.reduction %}Oui{% else %}Non{% endif %}<br />
                     </p>
                 {% endfor %}
-            </div>
         {% endfor %}
 {% endblock %}

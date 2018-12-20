@@ -3,7 +3,6 @@
 {% block titre %}{{ parent() }}paiement{% endblock %}
 
 {% block body %}
-        {{prix}}
         <form action="traitement" method="POST">
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"

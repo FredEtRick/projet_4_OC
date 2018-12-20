@@ -115,7 +115,7 @@ class DefaultController extends Controller
                 $billet->setPersonne($personne);
                 $billet->setReservation($reservation);
                 $prix += $billet->getTarif();
-                echo $billet->getTarif();
+                //echo $billet->getTarif();
             }
         }
 
@@ -139,7 +139,7 @@ class DefaultController extends Controller
                 $billet->setPersonne($visiteur);
                 $billet->setReservation($reservation);
                 $prix += $billet->getTarif();
-                echo $billet->getTarif();
+                //echo $billet->getTarif();
             }
         }
 
@@ -203,7 +203,7 @@ class DefaultController extends Controller
         $reservation->setDemiJournee($demiJournee);
         $em->persist($reservation);
 
-        echo '<p>' . $_SERVER['PHP_SELF'] . '</p>';
+        //echo '<p>' . $_SERVER['PHP_SELF'] . '</p>';
 
         /*$messageHtml .= '<p>Musée du Louvre.<br /><img src="cid:images/musee.jpg" alt="louvre" /></p>';
         $messageHtml .= '<p>Billet pour une visite le ';*/

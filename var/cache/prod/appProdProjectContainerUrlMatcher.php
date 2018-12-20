@@ -43,6 +43,36 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
         }
         not_fmd_booking_management_homepage:
 
+        // fmd_booking_management_verifMail
+        if ('/verifMail' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::verifMailAction',  '_route' => 'fmd_booking_management_verifMail',);
+        }
+
+        // fmd_booking_management_choix
+        if ('/choix' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::choixAction',  '_route' => 'fmd_booking_management_choix',);
+        }
+
+        // fmd_booking_management_consultation
+        if ('/consultation' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::consultationAction',  '_route' => 'fmd_booking_management_consultation',);
+        }
+
+        // fmd_booking_management_reservation
+        if ('/reservation' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::reservationAction',  '_route' => 'fmd_booking_management_reservation',);
+        }
+
+        // fmd_booking_management_traitement
+        if ('/traitement' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::traitementAction',  '_route' => 'fmd_booking_management_traitement',);
+        }
+
+        // fmd_booking_management_paiement
+        if ('/paiement' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::paiementAction',  '_route' => 'fmd_booking_management_paiement',);
+        }
+
         // fmd_personne_homepage
         if ('/personne' === $trimmedPathinfo) {
             $ret = array (  '_controller' => 'Fmd\\PersonneBundle\\Controller\\DefaultController::indexAction',  '_route' => 'fmd_personne_homepage',);
