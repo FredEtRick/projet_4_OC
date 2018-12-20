@@ -56,21 +56,23 @@ class DefaultController extends Controller
     {
         $ancienVisiteur = true;
         $choix = $_POST['choix'];
+        $session = $request->getSession();
+        $mailSession = $session->get('mail');
         if ($choix == 'reserver')
         {
-            $session = $request->getSession();
-            $mailSession = $session->get('mail');
             // préparer les données : précédents visiteurs etc
             // requetes doivent être faites dans repository !!!
             $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
             $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
             $session->set("nombrePersonnesLieesAuMail", count($personnesLieesAuMail));
-
             return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail));
         }
         elseif ($choix == 'consulter')
         {
-            return $this->render('@FmdBookingManagement/Default/consultation.php.twig');
+            $repositoryReservation = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
+            $reservationsLieesAuMail = $repositoryReservation->getReservationsViaMail($mailSession);
+            $session->set("nombreReservationsLieesAuMail", count($reservationsLieesAuMail));
+            return $this->render('@FmdBookingManagement/Default/consultation.php.twig', array('reservationsLieesAuMail' => $reservationsLieesAuMail, 'mail' => $mailSession));
         }
         else
         {

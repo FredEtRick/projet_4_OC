@@ -4,8 +4,23 @@
         <title>musée du louvre - site de réservation</title>
     </head>
     <body>
-        <form method="post" action=" ? ">
-            <p>consultation</p>
-        </form>
+        <p>Les reservations faites avec le mail {{ mail }} :</p>
+        {% for reservation in reservationsLieesAuMail %}
+            <div id="divReservation{{ loop.index }}">
+                <input type="hidden" id="idReservation{{ loop.index }}" name="idReservation{{ loop.index }}" value="{{ reservation.id }}" />
+                <p>
+                    Réservation pour une visite le {{ reservation.getDateReservationString() }}, {% if reservation.demiJournee %}arrivée prévue après 14h,{% else %}arrivée à heure libre,{% endif %} personnes attendues :
+                </p>
+                {% for billet in reservation.billets %}
+                    <p>
+                        Prénom : {{ billet.personne.prenom }}<br />
+                        Nom : {{ billet.personne.nom }}<br />
+                        Pays : {{ billet.personne.pays }}<br />
+                        Date de naissance : {{ billet.personne.getDateNaissanceString() }}<br />
+                        Réduction : {% if billet.personne.reduction %}Oui{% else %}Non{% endif %}<br />
+                    </p>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </body>
 </html>

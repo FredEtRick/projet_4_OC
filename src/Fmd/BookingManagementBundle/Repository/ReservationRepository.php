@@ -18,4 +18,12 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }*/
+    
+    public function getReservationsViaMail($mail)
+    {
+        $query = $this->_em->createQuery("SELECT r FROM FmdBookingManagementBundle:Reservation r WHERE r.mail = :mail AND r.dateReservation >= CURRENT_DATE() ORDER BY r.dateReservation ASC");
+        $query->setParameter('mail', $mail);
+
+        return $query->getResult();
+    }
 }
