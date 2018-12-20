@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>musée du louvre - site de réservation</title>
-    </head>
-    <body>
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}reservation en cours{% endblock %}
+
+{% block body %}
         <p>
             <img src="{{ asset('images/musee.jpg') }}" alt="image" />
         </p>
@@ -1679,5 +1678,4 @@
                 pNouvellePersonne.appendChild(nouveauBoutonSupprimer);
             }
         </script>
-    </body>
-</html>
+{% endblock %}

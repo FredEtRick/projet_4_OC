@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>musée du louvre - site de réservation</title>
-    </head>
-    <body>
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}votre billet{% endblock %}
+
+{% block body %}
         <p>
             Musée du Louvre.<br />
             <img src="http://localhost:8888{{ asset('images/musee.jpg') }}" alt="louvre" />
@@ -29,5 +28,4 @@
         <p>
             Cet e-mail fait office de billet. Vous pouvez l'imprimer ou le montrer sur votre smartphone ou tablette.
         </p>
-    </body>
-</html>
+{% endblock %}

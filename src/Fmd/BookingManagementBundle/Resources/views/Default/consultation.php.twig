@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>musée du louvre - site de réservation</title>
-    </head>
-    <body>
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}vos reservations{% endblock %}
+
+{% block body %}
         <p>Les reservations faites avec le mail {{ mail }} :</p>
         {% for reservation in reservationsLieesAuMail %}
             <div id="divReservation{{ loop.index }}">
@@ -22,5 +21,4 @@
                 {% endfor %}
             </div>
         {% endfor %}
-    </body>
-</html>
+{% endblock %}

@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>musée du louvre - site de réservation</title>
-    </head>
-    <body>
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}traitement{% endblock %}
+
+{% block body %}
         <p>
             {% if reussi %}
                 Le traitement a réussi.
@@ -11,5 +10,4 @@
                 Le traitement a échoué.
             {% endif %}
         </p>
-    </body>
-</html>
+{% endblock %}
