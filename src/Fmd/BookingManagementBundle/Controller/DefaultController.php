@@ -26,29 +26,45 @@ require_once __DIR__.'/../../../../vendor/autoload.php';
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function getLienBanniere(Request $request)
     {
-        return $this->render('@FmdBookingManagement/Default/index.php.twig');
+        $session = $request->getSession();
+        $mail = $session->get('mail');
+        echo $mail;
+        if (preg_match("#@#", $mail))
+            return "/app_dev.php/verifMail";
+        else
+            return "/app_dev.php";
+    }
+
+    public function indexAction(Request $request)
+    {
+        //$session = $request->getSession();
+        return $this->render('@FmdBookingManagement/Default/index.php.twig', array('lienBanniere' => $this->getLienBanniere($request)));
     }
     
     public function verifMailAction(Request $request)
     {
         $session = $request->getSession();
-        $mailPost = $_POST['mail'];
-        $session->set('mail', $mailPost);
+        $mail = $session->get('mail');
+        if (! preg_match("#@#", $mail))
+        {
+            $mail = $_POST['mail'];
+            $session->set('mail', $mail);
+        }
         $repository = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
-        $mailBDD = $repository->findBy(array('mail' => $mailPost));
+        $mailBDD = $repository->findBy(array('mail' => $mail));
         if ($mailBDD) // si $mailBDD n'est pas null, c'est que le mail a déjà été utilisé. Préremplir une part du formulaire. Note : passer d'abord par le choix entre "réserver" et "consulter une résevation"
         {
             $session->set('ancienVisiteur', true);
-            return $this->render('@FmdBookingManagement/Default/choix.php.twig');
+            return $this->render('@FmdBookingManagement/Default/choix.php.twig', array('lienBanniere' => $this->getLienBanniere($request)));
         }
         else // sinon, le mail n'a jamais été utilisé, tout faire de 0.
         {
             $session->set('ancienVisiteur', false);
             $ancienVisiteur = false;
             // echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur));
+            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request)));
         }
     }
     
@@ -65,18 +81,18 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
             $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
             $session->set("nombrePersonnesLieesAuMail", count($personnesLieesAuMail));
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail));
+            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail, 'lienBanniere' => $this->getLienBanniere($request)));
         }
         elseif ($choix == 'consulter')
         {
             $repositoryReservation = $this->getDoctrine()->getManager()->getRepository('FmdBookingManagementBundle:Reservation');
             $reservationsLieesAuMail = $repositoryReservation->getReservationsViaMail($mailSession);
             $session->set("nombreReservationsLieesAuMail", count($reservationsLieesAuMail));
-            return $this->render('@FmdBookingManagement/Default/consultation.php.twig', array('reservationsLieesAuMail' => $reservationsLieesAuMail, 'mail' => $mailSession));
+            return $this->render('@FmdBookingManagement/Default/consultation.php.twig', array('reservationsLieesAuMail' => $reservationsLieesAuMail, 'mail' => $mailSession, 'lienBanniere' => $this->getLienBanniere($request)));
         }
         else
         {
-            return $this->render('@FmdBookingManagement/Default/index.php.twig');
+            return $this->render('@FmdBookingManagement/Default/index.php.twig', array('lienBanniere' => $this->getLienBanniere($request)));
             // rajouter un message d'erreur
         }
     }
@@ -145,7 +161,7 @@ class DefaultController extends Controller
 
         $session->set('prix', $prix);
 
-        return $this->render('@FmdBookingManagement/Default/paiement.php.twig', array('prix' => $prix*100));
+        return $this->render('@FmdBookingManagement/Default/paiement.php.twig', array('prix' => $prix*100, 'lienBanniere' => $this->getLienBanniere($request)));
     }
 
     public function traitementAction(Request $request)
@@ -377,7 +393,7 @@ class DefaultController extends Controller
             $this->get('mailer')->send($mailFinal);
         }
 
-        return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
+        return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi, 'lienBanniere' => $this->getLienBanniere($request)));
     }
 
     public function renvoieBilletAction(Request $request)
@@ -413,6 +429,6 @@ class DefaultController extends Controller
 
         $this->get('mailer')->send($mailFinal);
 
-        return $this->render('@FmdBookingManagement/Default/renvoieMail.php.twig');
+        return $this->render('@FmdBookingManagement/Default/renvoieMail.php.twig', array('lienBanniere' => $this->getLienBanniere($request)));
     }
 }

@@ -3,6 +3,9 @@
 {% block titre %}{{ parent() }}paiement{% endblock %}
 
 {% block body %}
+        <p>
+            Pour régler votre réservation, merci de cliquer sur le bouton ci-dessous :
+        </p>
         <form action="traitement" method="POST">
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"

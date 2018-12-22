@@ -63,6 +63,11 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
             return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::reservationAction',  '_route' => 'fmd_booking_management_reservation',);
         }
 
+        // fmd_booking_management_renvoieBillet
+        if ('/renvoieBillet' === $pathinfo) {
+            return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::renvoieBilletAction',  '_route' => 'fmd_booking_management_renvoieBillet',);
+        }
+
         // fmd_booking_management_traitement
         if ('/traitement' === $pathinfo) {
             return array (  '_controller' => 'Fmd\\BookingManagementBundle\\Controller\\DefaultController::traitementAction',  '_route' => 'fmd_booking_management_traitement',);
