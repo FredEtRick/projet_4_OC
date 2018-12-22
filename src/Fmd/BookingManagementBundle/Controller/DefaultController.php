@@ -97,7 +97,7 @@ class DefaultController extends Controller
         $date = \DateTime::createFromFormat('d/m/Y', $_POST['dateVisite']);
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
         $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+        $repository = $em->getRepository('FmdPersonneBundle:Personne');
 
         // creer la reservation en BDD
         $reservation = new Reservation();
@@ -183,7 +183,7 @@ class DefaultController extends Controller
             $demiJournee = true;
         $nombrePersonnesLieesAuMail = $session->get("nombrePersonnesLieesAuMail");
         $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+        $repository = $em->getRepository('FmdPersonneBundle:Personne');
         //if (preg_match("#^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,6}#", $mail))
         if (preg_match("#(hotmail|live|msn)\.[a-zA-Z]{2,6}$#", $mail))
             $sautLigne = "\r\n";
@@ -378,5 +378,41 @@ class DefaultController extends Controller
         }
 
         return $this->render('@FmdBookingManagement/Default/traitement.php.twig', array('reussi' => $reussi));
+    }
+
+    public function renvoieBilletAction(Request $request)
+    {
+        $session = $request->getSession();
+        $mail = $_POST['mail'];
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('FmdBookingManagementBundle:Reservation');
+        $reservation = $repository->find($_POST['idReservation']);
+        $sujetMail = 'Votre réservation pour le musée du Louvre';
+        $dateReservationString = $reservation->getDateReservationString();
+        $demiJournee = $reservation->getDemiJournee();
+        $prix = 0;
+        $billets = $reservation->getBillets();
+        $personnes = array();
+        foreach($billets as $billet)
+        {
+            $prix += $billet->getTarif();
+            $personne = $billet->getPersonne();
+            if ($personne->getReduction())
+                $reductionString = 'oui';
+            else
+                $reductionString = 'non';
+            $personnes[] = $personne->getPrenom() . ' ' . $personne->getNom() . ', né le ' . $personne->getDateNaissanceString() . ', réduction : ' . $reductionString;
+        }
+        $codeReservation = $reservation->getId() . '*' . $reservation->getAleatoire();
+
+        $mailFinal = (new \Swift_Message($sujetMail))
+            ->setFrom('travail@MacBook-Pro-de-frederic.local')
+            ->setTo($mail)
+            ->setCharset('UTF-8')
+            ->setBody($this->renderView('@FmdBookingManagement/Default/mail.php.twig', array('dateReservationString' => $dateReservationString, 'demiJournee' => $demiJournee, 'personnesPourMail' => $personnes, 'prix' => $prix, 'codeReservation' => $codeReservation)), 'text/html');
+
+        $this->get('mailer')->send($mailFinal);
+
+        return $this->render('@FmdBookingManagement/Default/renvoieMail.php.twig');
     }
 }

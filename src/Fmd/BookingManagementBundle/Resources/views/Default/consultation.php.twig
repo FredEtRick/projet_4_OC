@@ -7,21 +7,28 @@
         {% for reservation in reservationsLieesAuMail %}
             </section>
             <section id="divReservation{{ loop.index }}" class="encadre">
-                <input type="hidden" id="idReservation{{ loop.index }}" name="idReservation{{ loop.index }}" value="{{ reservation.id }}" />
-                <p>
-                    Réservation pour une visite le {{ reservation.getDateReservationString() }}, {% if reservation.demiJournee %}arrivée prévue après 14h{% else %}arrivée à heure libre{% endif %}.
-                </p>
-                <p>
-                    Personnes attendues :
-                </p>
-                {% for billet in reservation.billets %}
+                <form method="post" action="renvoieBillet">
+                    <input type="hidden" id="idReservation{{ loop.index }}" name="idReservation" value="{{ reservation.id }}" />
                     <p>
-                        Prénom : {{ billet.personne.prenom }}<br />
-                        Nom : {{ billet.personne.nom }}<br />
-                        Pays : {{ billet.personne.pays }}<br />
-                        Date de naissance : {{ billet.personne.getDateNaissanceString() }}<br />
-                        Réduction : {% if billet.personne.reduction %}Oui{% else %}Non{% endif %}<br />
+                        Réservation pour une visite le {{ reservation.getDateReservationString() }}, {% if reservation.demiJournee %}arrivée prévue après 14h{% else %}arrivée à heure libre{% endif %}.
                     </p>
-                {% endfor %}
+                    <p>
+                        Personnes attendues :
+                    </p>
+                    {% for billet in reservation.billets %}
+                        <p>
+                            Prénom : {{ billet.personne.prenom }}<br />
+                            Nom : {{ billet.personne.nom }}<br />
+                            Pays : {{ billet.personne.pays }}<br />
+                            Date de naissance : {{ billet.personne.getDateNaissanceString() }}<br />
+                            Réduction : {% if billet.personne.reduction %}Oui{% else %}Non{% endif %}<br />
+                        </p>
+                    {% endfor %}
+                    <p>
+                        Vous n'avez pas reçu de mail ? Vous avez perdu votre mail ?<br />
+                        Confirmez votre mail : <input type="mail" name="mail" value="{{ reservation.mail }}" /><br />
+                        <input type="submit" value="Renvoyer le billet par mail" />
+                    </p>
+                </form>
         {% endfor %}
 {% endblock %}

@@ -242,4 +242,9 @@ class Reservation
     {
         return $this->demiJournee;
     }
+
+    /*public function envoyerBillet()
+    {
+
+    }*/
 }

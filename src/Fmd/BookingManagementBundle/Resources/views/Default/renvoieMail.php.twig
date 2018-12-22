@@ -1,0 +1,9 @@
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}renvoie du billet{% endblock %}
+
+{% block body %}
+        <p>
+            Le billet vous a été renvoyé par mail. Si vous ne recevez toujours rien au bout de quelques minutes, retournez dans la consultation de reservations et faites une nouvelle tentative. Si l'envoie ne marche toujours pas, essayez avec un autre mail.
+        </p>
+{% endblock %}

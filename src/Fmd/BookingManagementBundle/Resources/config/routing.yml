@@ -25,3 +25,7 @@ fmd_booking_management_traitement:
 fmd_booking_management_paiement:
     path:     /paiement
     defaults: { _controller: FmdBookingManagementBundle:Default:paiement }
+    
+fmd_booking_management_renvoieBillet:
+    path:     /renvoieBillet
+    defaults: { _controller: FmdBookingManagementBundle:Default:renvoieBillet }
