@@ -56,3 +56,43 @@ td > a
     background : #d3a95b;
     text-align : center;
 }
+nav
+{
+    background : #d3a95b;
+}
+nav a
+{
+    color : rgb(84, 84, 221);
+    font-variant : small-caps;
+}
+@media all and (min-width : 850px)
+{
+    .conteneur
+    {
+        display : flex;
+    }
+    nav
+    {
+        min-width : 210px !important;
+        width : 210px !important;
+        margin : 10px;
+        height : 90px;;
+    }
+}
+@media all and (max-width : 849px)
+{
+    nav
+    {
+        margin : 10px !important;
+        padding : 1px;
+    }
+    .listeMenu
+    {
+        display : flex;
+        list-style-type: none;
+    }
+    .puceMenu
+    {
+        margin : auto;
+    }
+}

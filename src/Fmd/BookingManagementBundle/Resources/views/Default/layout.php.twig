@@ -10,25 +10,29 @@
                 <h1>Musée du Louvre - site de réservation de billets</h1>
             </header>
         </a>
-        {% if nav %}
-            <nav>
-                <ul>
-                    <a href="/app_dev.php">
-                        <li>choix d'e-mail</li>
-                    </a>
-                    <a href="/app_dev.php/choix?choix=reserver">
-                        <li>réservation de billet</li>
-                    </a>
-                    <a href="/app_dev.php/choix?choix=consulter">
-                        <li>consultation de billets</li>
-                    </a>
-                </ul>
-            </nav>
-        {% endif %}
-        <section>
-            {% block body %}
-            {% endblock %}
-        </section>
+        <div class="conteneur">
+            {% if nav %}
+                <nav>
+                    <ul class="listeMenu">
+                        <a href="/app_dev.php" class="puceMenu">
+                            <li>choix email</li>
+                        </a>
+                        <a href="/app_dev.php/choix?choix=reserver" class="puceMenu">
+                            <li>réservation de billet</li>
+                        </a>
+                        <a href="/app_dev.php/choix?choix=consulter" class="puceMenu">
+                            <li>consultation de billets</li>
+                        </a>
+                    </ul>
+                </nav>
+            {% endif %}
+            <div class="corps">
+                <section>
+                    {% block body %}
+                    {% endblock %}
+                </section>
+            </div>
+        </div>
         <footer>
             <table>
                 <tr>
