@@ -78,6 +78,8 @@ class Reservation
         $caracteres = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890';
         $melange = substr(str_shuffle($caracteres), 0, 12);
         $this->aleatoire = $melange;
+
+        $this->dateReservation = new \DateTime();
     }
 
     /**

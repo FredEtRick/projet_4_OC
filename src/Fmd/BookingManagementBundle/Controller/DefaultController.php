@@ -6,7 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Fmd\BookingManagementBundle\Entity;
+use Symfony\Component\Form\Extension\Core\Type\Checkbox;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 /*use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;*/
 
@@ -16,6 +21,7 @@ $session->start();*/
 /*$session = new Session(new NativeSessionStorage(), new AttributeBag());
 $session->start();*/
 
+use Fmd\BookingManagementBundle\Entity;
 use Fmd\PersonneBundle\Entity\Personne;
 use Fmd\BookingManagementBundle\Entity\Reservation;
 use Fmd\BookingManagementBundle\Entity\Billet;
@@ -46,6 +52,45 @@ class DefaultController extends Controller
             return false;
     }
 
+    public function formulaireReservation($ancienVisiteur, $mailSession, Request $request)
+    {
+        $session = $request->getSession();
+
+        if ($ancienVisiteur)
+        {
+            // préparer les données : précédents visiteurs etc
+            // requetes doivent être faites dans repository !!!
+            $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
+            $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
+            $session->set("nombrePersonnesLieesAuMail", count($personnesLieesAuMail));
+        }
+        else
+        {
+            $personnesLieesAuMail = null;
+        }
+
+        $reservation = new Reservation();
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $reservation);
+
+        $formBuilder
+            ->add('dateReservation',            DateType::class)
+            ->add('Soumettre le formulaire',   SubmitType::class)
+        ;
+
+        $form = $formBuilder->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $reservation = $form->getData();
+
+            return $this->redirectToRoute('paiement');
+        }
+        
+        return $this->render('@FmdBookingManagement/Default/reservationSymfony.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request), 'form' => $form->createView(), 'personnesLieesAuMail' => $personnesLieesAuMail));
+    }
+
     public function indexAction(Request $request)
     {
         $session = $request->getSession();
@@ -74,13 +119,16 @@ class DefaultController extends Controller
             $session->set('ancienVisiteur', false);
             $ancienVisiteur = false;
             // echo isset($ancienVisiteur); // affiche 1 pourtant reservation dit que ancienVisiteur existe pas !!!
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request)));
+            
+            return $this->formulaireReservation($ancienVisiteur, null, $request);
+
+            //return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request)));
         }
     }
     
     public function choixAction(Request $request)
     {
-        $ancienVisiteur = true;
+        $ancienVisiteur = true; // si on arrive a choixAction, c'est que verifMail nous y a mené, et donc que le mail était reconnu.
         if (isset($_POST['choix']))
             $choix = $_POST['choix'];
         else
@@ -89,12 +137,7 @@ class DefaultController extends Controller
         $mailSession = $session->get('mail');
         if ($choix == 'reserver')
         {
-            // préparer les données : précédents visiteurs etc
-            // requetes doivent être faites dans repository !!!
-            $repository = $this->getDoctrine()->getManager()->getRepository('FmdPersonneBundle:Personne');
-            $personnesLieesAuMail = $repository->getPersonnesViaMail($mailSession);
-            $session->set("nombrePersonnesLieesAuMail", count($personnesLieesAuMail));
-            return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'personnesLieesAuMail' => $personnesLieesAuMail, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request)));
+            return $this->formulaireReservation($ancienVisiteur, $mailSession, $request);
         }
         elseif ($choix == 'consulter')
         {

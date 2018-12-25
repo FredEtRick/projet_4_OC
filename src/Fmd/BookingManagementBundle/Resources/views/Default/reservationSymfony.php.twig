@@ -1,0 +1,57 @@
+{% extends "@FmdBookingManagement/Default/layout.php.twig" %}
+
+{% block titre %}{{ parent() }}reservation en cours{% endblock %}
+
+{% block body %}
+
+<div class="well">
+    {{ form_start(form) }}
+
+    {% if ancienVisiteur %}
+        <p>Voulez vous reserver pour les personnes suivantes ? (basé sur vos précédentes réservations)</p>
+        <div class="encadre" id="divAnciennesPersonnes">
+            {% for personne in personnesLieesAuMail %}
+                <div id="divPersonne{{ loop.index }}">
+                    <input type="hidden" id="idPersonne{{ loop.index }}" name="idPersonne{{ loop.index }}" value="{{ personne.id }}" />
+                    <p>
+                        Prénom : {{ personne.prenom }}<br />
+                        Nom : {{ personne.nom }}<br />
+                        Pays : {{ personne.pays }}<br />
+                        Date de naissance : {{ personne.getDateNaissanceString() }}<br />
+                        Réduction : {% if personne.reduction %}Oui{% else %}Non{% endif %}<br />
+                        <input type="button" onclick="supprimerPersonne({{ loop.index }})" value="Supprimer" />
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <p>Souhaitez vous réserver pour d'autres personnes ? (dans le cas contraire, cliquez sur "supprimer")</p>
+    {% else %}
+        <p>Donnez vous s'il vous plait les informations suivantes pour chacun des visiteurs attendus :</p>
+    {% endif %}
+
+    <!-- infos visiteurs -->
+    <div class="encadre" id="divNouvellesPersonnes">
+        <p id="pPersonne1">
+            <label for="prenom1">Prénom : </label>
+                <input id="prenom1" type="text" name="prenom1" required /><br />
+            <label for="nom1">Nom : </label>
+                <input id="nom1" type="text" name="nom1" required /><br />
+            <label for="dateNaissance1">Date de naissance : </label>
+                <input id="dateNaissance1" type="text" name="dateNaissance1" required /> Format : jj/mm/aaaa. Exemple : écrivez 01/12/1980 pour le premier décembre 1980.<br />
+            <input type="checkbox" name="reduction1" id="reduction1" value="reduction1" />
+                <label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
+            <input type="button" onclick="supprimerPersonneNouvelle(1)" value="Supprimer" />
+        </p>
+        <p id="pAjouterPersonne">
+            <input type="button" onclick="ajouterPersonne()" value="Ajouter une personne" />
+        </p>
+    </div>
+
+    {{ form_widget(form) }}
+
+
+    
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

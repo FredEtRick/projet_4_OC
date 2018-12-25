@@ -78,6 +78,10 @@ nav a
         margin : 10px;
         height : 90px;;
     }
+    .corps
+    {
+        margin : auto;
+    }
 }
 @media all and (max-width : 849px)
 {
