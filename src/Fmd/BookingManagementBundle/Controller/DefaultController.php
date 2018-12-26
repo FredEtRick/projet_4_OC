@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 /*use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;*/
 
@@ -23,8 +24,11 @@ $session->start();*/
 
 use Fmd\BookingManagementBundle\Entity;
 use Fmd\PersonneBundle\Entity\Personne;
+use Fmd\PersonneBundle\Entity\PersonneType;
 use Fmd\BookingManagementBundle\Entity\Reservation;
+use Fmd\BookingManagementBundle\Entity\ReservationType;
 use Fmd\BookingManagementBundle\Entity\Billet;
+use Fmd\BookingManagementBundle\Entity\BilletType;
 
 //require_once '/path/to/vendor/autoload.php';
 
@@ -70,14 +74,17 @@ class DefaultController extends Controller
         }
 
         $reservation = new Reservation();
-        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $reservation);
+        /*$formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $reservation);
 
         $formBuilder
             ->add('dateReservation',            DateType::class)
-            ->add('Soumettre le formulaire',   SubmitType::class)
+            ->add('Soumettre le formulaire',    SubmitType::class)
+            //->add('pays',                       CountryType::class)
         ;
 
-        $form = $formBuilder->getForm();
+        $form = $formBuilder->getForm();*/
+
+        $form = $this->createForm(ReservationType::class, $reservation);
 
         $form->handleRequest($request);
 

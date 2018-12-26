@@ -19,7 +19,7 @@
                         Pays : {{ personne.pays }}<br />
                         Date de naissance : {{ personne.getDateNaissanceString() }}<br />
                         Réduction : {% if personne.reduction %}Oui{% else %}Non{% endif %}<br />
-                        <input type="button" onclick="supprimerPersonne({{ loop.index }})" value="Supprimer" />
+                        {# <input type="button" onclick="supprimerPersonne({{ loop.index }})" value="Supprimer" /> #}
                     </p>
                 </div>
             {% endfor %}
@@ -30,28 +30,36 @@
     {% endif %}
 
     <!-- infos visiteurs -->
-    <div class="encadre" id="divNouvellesPersonnes">
-        <p id="pPersonne1">
-            <label for="prenom1">Prénom : </label>
-                <input id="prenom1" type="text" name="prenom1" required /><br />
-            <label for="nom1">Nom : </label>
-                <input id="nom1" type="text" name="nom1" required /><br />
-            <label for="dateNaissance1">Date de naissance : </label>
-                <input id="dateNaissance1" type="text" name="dateNaissance1" required /> Format : jj/mm/aaaa. Exemple : écrivez 01/12/1980 pour le premier décembre 1980.<br />
-            <input type="checkbox" name="reduction1" id="reduction1" value="reduction1" />
-                <label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
-            <input type="button" onclick="supprimerPersonneNouvelle(1)" value="Supprimer" />
-        </p>
-        <p id="pAjouterPersonne">
-            <input type="button" onclick="ajouterPersonne()" value="Ajouter une personne" />
-        </p>
+    <div class="encadre billets" data-prototype="{{ form_widget(form.billets.vars.prototype)|e('html_attr') }}">
     </div>
 
     {{ form_widget(form) }}
-
-
     
     {{ form_end(form) }}
 </div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    function ajoutBilletForm($collectionHolder, $nouveauBilletBouton)
+    {
+        var prototype = $collectionHolder.data('prototype');
+        var index = $collectionHolder.data('index');
+        var nouveauFormulaire = prototype;
+        nouveauFormulaire = nouveauFormulaire.replace(/__name__/g, index);
+        $collectionHolder.data('index', index + 1);
+        var $nouveauFormulaireDiv = $('<div></div>').append(nouveauFormulaire);
+        $nouveauBilletBouton.before($nouveauFormulaireDiv);
+    }
+
+    var $collectionHolder = $('div.billets');
+    var $nouveauBilletBouton = $('<p><button type="button" class="boutonAjoutBillet">ajouter une personne</button></p>');
+    $collectionHolder.append($nouveauBilletBouton);
+    ajoutBilletForm($collectionHolder, $nouveauBilletBouton);
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    $nouveauBilletBouton.on('click', function(e){
+        ajoutBilletForm($collectionHolder, $nouveauBilletBouton);
+    });
+</script>
 
 {% endblock %}
