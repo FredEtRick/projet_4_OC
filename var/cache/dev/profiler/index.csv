@@ -52,3 +52,5 @@ cd02a1,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821465
 14fcbe,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821544,,200
 3ca4c9,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821614,,200
 7c1e44,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821722,,200
+63a120,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545822084,,200
+298362,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545917299,,200

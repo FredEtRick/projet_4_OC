@@ -36,7 +36,7 @@ class Reservation
     private $mail;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fmd\BookingManagementBundle\Entity\Billet", mappedBy="reservation")
+     * @ORM\OneToMany(targetEntity="Fmd\BookingManagementBundle\Entity\Billet", mappedBy="reservation", cascade={"persist"})
      */
     private $billets;
     

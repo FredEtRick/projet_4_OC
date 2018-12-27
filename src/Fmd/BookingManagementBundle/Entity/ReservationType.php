@@ -20,7 +20,9 @@ class ReservationType extends AbstractType
             ->add('billets', CollectionType::class, array(
                     'entry_type' => BilletType::class,
                     'entry_options' => array('label' => false),
-                    'allow_add' => true))
+                    'allow_add' => true,
+                    'by_reference' => false,
+                    'allow_delete' => true))
             ->add('dateReservation',            DateType::class)
             ->add('Soumettre le formulaire',    SubmitType::class)
         ;
