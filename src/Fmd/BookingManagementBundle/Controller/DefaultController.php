@@ -73,7 +73,7 @@ class DefaultController extends Controller
             $personnesLieesAuMail = null;
         }
 
-        $reservation = new Reservation();
+        //$reservation = new Reservation();
         /*$formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $reservation);
 
         $formBuilder
@@ -84,7 +84,7 @@ class DefaultController extends Controller
 
         $form = $formBuilder->getForm();*/
 
-        $form = $this->createForm(ReservationType::class, $reservation);
+        /*$form = $this->createForm(ReservationType::class, $reservation);
 
         $form->handleRequest($request);
 
@@ -93,9 +93,13 @@ class DefaultController extends Controller
             $reservation = $form->getData();
 
             return $this->redirectToRoute('paiement');
-        }
+        }*/
         
-        return $this->render('@FmdBookingManagement/Default/reservationSymfony.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request), 'form' => $form->createView(), 'personnesLieesAuMail' => $personnesLieesAuMail));
+        return $this->render('@FmdBookingManagement/Default/reservation.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request),/* 'form' => $form->createView(),*/ 'personnesLieesAuMail' => $personnesLieesAuMail));
+
+        /*$pays = new CountryType();
+
+        return $this->render('@FmdBookingManagement/Default/reservationMixte.php.twig', array('ancienVisiteur' => $ancienVisiteur, 'lienBanniere' => $this->getLienBanniere($request), 'nav' => $this->getNav($request), 'pays' => $pays, 'personnesLieesAuMail' => $personnesLieesAuMail));*/
     }
 
     public function indexAction(Request $request)

@@ -54,3 +54,16 @@ cd02a1,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821465
 7c1e44,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545821722,,200
 63a120,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545822084,,200
 298362,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545917299,,200
+1ec2a9,::1,GET,http://localhost:8888/app_dev.php/verifMail,1545931257,,200
+7ee90f,::1,POST,http://localhost:8888/app_dev.php/choix,1545931266,,200
+e46685,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545931270,f7ea72,200
+f7ea72,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545931270,,500
+293cf4,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545931344,9b4a83,200
+9b4a83,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545931344,,500
+52c413,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545932017,980f2a,200
+980f2a,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545932017,,500
+da7cf7,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545932065,2a3a12,200
+2a3a12,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545932065,,500
+51bb1e,::1,GET,http://localhost:8888/app_dev.php/choix?choix=reserver,1545932083,,200
+3f65d6,::1,POST,http://localhost:8888/app_dev.php/paiement,1545932162,,200
+eb51c2,::1,POST,http://localhost:8888/app_dev.php/traitement,1545932190,,200
