@@ -34,7 +34,7 @@
 						<input id="nom1" type="text" name="nom1" required /><br />
 					{% include '@FmdBookingManagement/Default/pays.html' %}
 					<label for="dateNaissance1">Date de naissance : </label>
-						<input id="dateNaissance1" type="text" name="dateNaissance1" required /> Format : jj/mm/aaaa. Exemple : écrivez 01/12/1980 pour le premier décembre 1980.<br />
+						<input id="dateNaissance1" type="text" name="dateNaissance1" required class="datepicker" /><br />
 					<input type="checkbox" name="reduction1" id="reduction1" value="reduction1" />
 						<label for="reduction1"> je possède une réduction</label> (à cocher si vous êtes étudiant, employé du musée, d'un service du ministère de la culture, ou si vous êtes militaire. Attention : un justificatif vous sera demandé)<br />
 					<input type="button" onclick="supprimerPersonneNouvelle(1)" value="Supprimer" />
@@ -53,7 +53,7 @@
                 <label for="dateVisite">
                     Date de visite du musée : 
                 </label>
-                <input type="text" name="dateVisite" id="dateVisite" required /> Format : jj/mm/aaaa. Exemple : écrivez 10/06/2019 pour le dix juin 2019.<br />
+                <input type="text" name="dateVisite" id="dateVisite" required class="datepicker" /><br />
                 Souhaitez vous arriver avant ou après 14h ? Après 14h, le tarif demi-journée s'applique, induisant une division par deux des prix de billets.<br />
                 <input type="radio" name="demiJournee" value="oui" id="oui" />
                     <label for="oui"> Nous arriverons après 14h</label><br />
@@ -70,7 +70,14 @@
 
 
 
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js">
+		</script>
+
         <script type="text/javascript">
+			$(".datepicker").each(function(date){
+				date.datepicker();
+			});
             var indexDernierePersonne = 1;
             var indexDernierePersonneElt = document.getElementById("indexDernierePersonne");
             function supprimerPersonne(indexPersonne)
@@ -140,6 +147,8 @@
                 nouveauChampsDate.setAttribute("id", "dateNaissance" + indexDernierePersonne);
                 nouveauChampsDate.setAttribute("name", "dateNaissance" + indexDernierePersonne);
                 nouveauChampsDate.required = true;
+                nouveauChampsDate.setAttribute("class", "datepicker");
+				nouveauChampsDate.datepicker();
                 var nouveauBrDate = document.createElement("br");
 
                 // création du champs de reduction
