@@ -82,15 +82,22 @@
 		
 
         <script type="text/javascript">
-			$(".datepicker").each(function(){
-				$(this).datepicker(
-                    {
-                        changeMonth: false,
-                        changeYear: true
-                    },
-                    $.datepicker.regional[ "fr" ]
-                );
-			});
+			$("#dateNaissance1").datepicker(
+                {
+                    changeMonth: false,
+                    changeYear: true,
+                    yearRange: "1900:+0"
+                },
+                $.datepicker.regional[ "fr" ]
+            );
+			$("#dateVisite").datepicker(
+                {
+                    changeMonth: false,
+                    changeYear: true,
+                    yearRange: "-00:+5"
+                },
+                $.datepicker.regional[ "fr" ]
+            );
             var indexDernierePersonne = 1;
             var indexDernierePersonneElt = document.getElementById("indexDernierePersonne");
             function supprimerPersonne(indexPersonne)
@@ -164,7 +171,8 @@
 				$nouveauChampsDate.datepicker(
                     {
                         changeMonth: false,
-                        changeYear: true
+                        changeYear: true,
+                        yearRange: "1900:+0"
                     },
                     $.datepicker.regional[ "fr" ]
                 );
