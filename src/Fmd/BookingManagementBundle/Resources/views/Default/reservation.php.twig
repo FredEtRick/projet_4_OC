@@ -2,6 +2,14 @@
 
 {% block titre %}{{ parent() }}reservation en cours{% endblock %}
 
+{% block jqueryUi %}
+    <script type="text/javascript" src="{{ asset('jquery.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ asset('jquery-ui.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datepickerLangue.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('jquery-ui.css') }}" />
+{% endblock %}
+
 {% block body %}
         <form method="post" action="paiement" id="formulaire">
             {% if ancienVisiteur %}
@@ -71,12 +79,17 @@
 
 
 
-		<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js">
-		</script>
+		
 
         <script type="text/javascript">
-			$(".datepicker").each(function(date){
-				date.datepicker();
+			$(".datepicker").each(function(){
+				$(this).datepicker(
+                    {
+                        changeMonth: false,
+                        changeYear: true
+                    },
+                    $.datepicker.regional[ "fr" ]
+                );
 			});
             var indexDernierePersonne = 1;
             var indexDernierePersonneElt = document.getElementById("indexDernierePersonne");
