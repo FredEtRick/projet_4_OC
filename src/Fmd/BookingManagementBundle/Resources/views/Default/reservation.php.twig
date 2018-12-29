@@ -155,13 +155,19 @@
                 nouveauLabelDate.setAttribute("for", "dateNaissance" + indexDernierePersonne);
                 nouveauLabelDate.textContent = "Date de naissance : ";
 
-                var nouveauChampsDate = document.createElement("INPUT");
-                nouveauChampsDate.setAttribute("type", "text");
-                nouveauChampsDate.setAttribute("id", "dateNaissance" + indexDernierePersonne);
-                nouveauChampsDate.setAttribute("name", "dateNaissance" + indexDernierePersonne);
-                nouveauChampsDate.required = true;
-                nouveauChampsDate.setAttribute("class", "datepicker");
-				nouveauChampsDate.datepicker();
+                var $nouveauChampsDate = $('<input></input>');
+                $nouveauChampsDate.attr("type", "text");
+                $nouveauChampsDate.attr("id", "dateNaissance" + indexDernierePersonne);
+                $nouveauChampsDate.attr("name", "dateNaissance" + indexDernierePersonne);
+                $nouveauChampsDate.prop('required',true);
+                $nouveauChampsDate.attr("class", "datepicker");
+				$nouveauChampsDate.datepicker(
+                    {
+                        changeMonth: false,
+                        changeYear: true
+                    },
+                    $.datepicker.regional[ "fr" ]
+                );
                 var nouveauBrDate = document.createElement("br");
 
                 // création du champs de reduction
@@ -194,7 +200,7 @@
                 pNouvellePersonne.appendChild(nouveauChampsPays);
                 pNouvellePersonne.appendChild(nouveauBrPays);
                 pNouvellePersonne.appendChild(nouveauLabelDate);
-                pNouvellePersonne.appendChild(nouveauChampsDate);
+                jQuery('#pPersonne' + indexDernierePersonne).append($nouveauChampsDate);
                 pNouvellePersonne.appendChild(nouveauBrDate);
                 pNouvellePersonne.appendChild(nouveauChampsReduction);
                 pNouvellePersonne.appendChild(nouveauLabelReduction);
